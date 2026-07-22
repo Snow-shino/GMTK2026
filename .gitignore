@@ -1,16 +1,32 @@
-# Godot 4+ specific ignores
+# Godot editor/import cache (Godot 3 and 4)
 .godot/
+.import/
 .nomedia
 
-# Godot-specific ignores
-.import/
+# Local export state and secrets. Keep export_presets.cfg tracked.
 export.cfg
 export_credentials.cfg
 
-# Imported translations (automatically generated from CSV files)
+# Generated translations
 *.translation
 
-# Mono-specific ignores
+# C# / Mono generated files
 .mono/
 data_*/
 mono_crash.*.json
+bin/
+obj/
+
+# Editor and OS clutter
+.vscode/
+.idea/
+.vs/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local logs and crash dumps
+*.log
+*.tmp
+*.bak
+*.orig
