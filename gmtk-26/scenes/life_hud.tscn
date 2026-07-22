@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/life_hud.gd" id="1_hud"]
+
+[node name="LifeHUD" type="CanvasLayer"]
+unique_name_in_owner = true
+script = ExtResource("1_hud")
+
+[node name="LifeBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 324.0
+offset_bottom = 52.0
+mouse_filter = 2
+show_percentage = false
