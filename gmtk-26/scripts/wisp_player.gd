@@ -9,14 +9,19 @@ signal life_depleted
 @export_range(0.1, 100.0, 0.1) var acceleration: float = 24.0
 @export_range(0.1, 100.0, 0.1) var deceleration: float = 30.0
 @export_range(0.1, 30.0, 0.1) var rotation_speed: float = 10.0
-@export_range(0.1, 30.0, 0.1) var jump_velocity: float = 7.0
+@export_range(0.1, 30.0, 0.1) var jump_velocity: float = 8.5
+
+@export_category("Air Movement")
+@export_range(0.1, 100.0, 0.1) var upward_gravity: float = 20.0
+@export_range(0.1, 100.0, 0.1) var downward_gravity: float = 32.0
+@export_range(0.0, 1.0, 0.05) var jump_cut_multiplier: float = 0.45
+@export_range(0.1, 100.0, 0.1) var air_acceleration: float = 22.0
+@export_range(0.0, 100.0, 0.1) var air_deceleration: float = 5.0
+@export_range(0.1, 30.0, 0.1) var max_air_speed: float = 6.5
 
 @onready var camera: Camera3D = %Camera3D
 @onready var visual: Node3D = %Visual
 @onready var life: Node = %LifeComponent
-
-var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
-
 
 func _ready() -> void:
 	add_to_group("player")
@@ -26,10 +31,15 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y -= _gravity * delta
-	elif Input.is_action_just_pressed("jump"):
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
 		velocity.y = jump_velocity
+
+	if Input.is_action_just_released("jump") and velocity.y > 0.0:
+		velocity.y *= jump_cut_multiplier
+
+	if not is_on_floor():
+		var gravity := upward_gravity if velocity.y > 0.0 else downward_gravity
+		velocity.y -= gravity * delta
 
 	var input_vector := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var camera_forward := -camera.global_basis.z
@@ -40,8 +50,13 @@ func _physics_process(delta: float) -> void:
 	camera_right = camera_right.normalized()
 	var move_direction := (camera_right * input_vector.x + camera_forward * -input_vector.y).normalized()
 
-	var target_velocity := move_direction * move_speed
-	var change_rate := acceleration if not move_direction.is_zero_approx() else deceleration
+	var target_speed := move_speed if is_on_floor() else max_air_speed
+	var target_velocity := move_direction * target_speed
+	var change_rate: float
+	if is_on_floor():
+		change_rate = acceleration if not move_direction.is_zero_approx() else deceleration
+	else:
+		change_rate = air_acceleration if not move_direction.is_zero_approx() else air_deceleration
 	velocity.x = move_toward(velocity.x, target_velocity.x, change_rate * delta)
 	velocity.z = move_toward(velocity.z, target_velocity.z, change_rate * delta)
 
