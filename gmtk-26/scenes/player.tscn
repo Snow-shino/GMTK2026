@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3 uid="uid://cmwl5h4dv8abx"]
 
-[ext_resource type="Script" path="res://scripts/wisp_player.gd" id="1_player"]
-[ext_resource type="Script" path="res://scripts/life_component.gd" id="2_life"]
+[ext_resource type="Script" uid="uid://oav20n4lfaxn" path="res://scripts/wisp_player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://dqh7ndjild0mg" path="res://scripts/life_component.gd" id="2_life"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape_player"]
 radius = 0.45
@@ -11,9 +11,6 @@ height = 1.8
 transparency = 1
 shading_mode = 0
 albedo_color = Color(0.35, 0.85, 1, 0.9)
-emission_enabled = true
-emission = Color(0.15, 0.7, 1, 1)
-emission_energy_multiplier = 3.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_wisp"]
 material = SubResource("Material_wisp")
@@ -23,45 +20,40 @@ height = 0.96
 [sub_resource type="SphereShape3D" id="SphereShape_arm"]
 radius = 0.2
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=1835401173]
 unique_name_in_owner = true
 script = ExtResource("1_player")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-position = Vector3(0, 0.9, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=811361362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape_player")
 
-[node name="Visual" type="Node3D" parent="."]
+[node name="Visual" type="Node3D" parent="." unique_id=825108720]
 unique_name_in_owner = true
-position = Vector3(0, 0.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
-[node name="WispMesh" type="MeshInstance3D" parent="Visual"]
+[node name="WispMesh" type="MeshInstance3D" parent="Visual" unique_id=1774211718]
 mesh = SubResource("SphereMesh_wisp")
 
-[node name="GlowLight" type="OmniLight3D" parent="Visual"]
+[node name="GlowLight" type="OmniLight3D" parent="Visual" unique_id=16021801]
 light_color = Color(0.25, 0.75, 1, 1)
 light_energy = 2.0
-omni_range = 5.0
 shadow_enabled = true
 
-[node name="CameraPivot" type="Node3D" parent="."]
-position = Vector3(0, 1.5, 0)
-rotation = Vector3(-0.261799, 0, 0)
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1982469868]
+transform = Transform3D(1, 0, 0, 0, 0.96592593, 0.2588187, 0, -0.2588187, 0.96592593, 0, 1.5, 0)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=560979490]
+shape = SubResource("SphereShape_arm")
 spring_length = 5.5
 margin = 0.15
-shape = SubResource("SphereShape_arm")
-collision_mask = 1
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=2078496529]
 unique_name_in_owner = true
 current = true
 fov = 65.0
 
-[node name="LifeComponent" type="Node" parent="."]
+[node name="LifeComponent" type="Node" parent="." unique_id=835234636]
 unique_name_in_owner = true
 script = ExtResource("2_life")
-max_life = 100.0
 starting_life = 70.0
-drain_rate = 2.0
