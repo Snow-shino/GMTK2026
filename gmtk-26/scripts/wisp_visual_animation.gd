@@ -55,13 +55,16 @@ var _landing_strength := 0.0
 var _visual_intensity := 0.0
 
 @onready var flame_shell: MeshInstance3D = %FlameShell
+@onready var inner_flame: MeshInstance3D = %InnerFlame
 @onready var ember_trail: GPUParticles3D = %EmberTrail
 @onready var ambient_sparks: GPUParticles3D = %AmbientSparks
 @onready var wisp_light: OmniLight3D = %WispLight
 
 var _flame_material: ShaderMaterial
+var _inner_flame_material: ShaderMaterial
 var _ember_material: ShaderMaterial
 var _base_flame_scale: Vector3
+var _base_inner_flame_scale: Vector3
 var _base_light_energy: float
 
 
@@ -73,8 +76,10 @@ func _ready() -> void:
 	_phase = randf_range(0.0, TAU)
 	_previous_grounded = _body.is_on_floor()
 	_base_flame_scale = flame_shell.scale
+	_base_inner_flame_scale = inner_flame.scale
 	_base_light_energy = wisp_light.light_energy
 	_flame_material = flame_shell.material_override as ShaderMaterial
+	_inner_flame_material = inner_flame.material_override as ShaderMaterial
 	_ember_material = ember_trail.draw_pass_1.surface_get_material(0) as ShaderMaterial
 	ember_trail.amount = maxi(maximum_emission_amount, 1)
 	ember_trail.lifetime = ember_lifetime
@@ -221,10 +226,13 @@ func _update_effect_intensity(delta: float, speed_ratio: float, grounded: bool) 
 	var flame_energy := 2.4 + _visual_intensity * 0.9 + jump_boost
 	if _flame_material:
 		_flame_material.set_shader_parameter("emission_strength", flame_energy)
-		_flame_material.set_shader_parameter("flicker_amount", 0.18 + _visual_intensity * 0.14)
+	if _inner_flame_material:
+		_inner_flame_material.set_shader_parameter("emission_strength", 4.2 + _visual_intensity * 0.65 + jump_boost)
 	var flame_stretch := 1.0 + _visual_intensity * 0.12 + clampf(_body.velocity.y / 18.0, -0.08, 0.18)
 	var target_flame_scale := _base_flame_scale * Vector3(1.0 - _visual_intensity * 0.03, flame_stretch, 1.0 - _visual_intensity * 0.03)
 	flame_shell.scale = flame_shell.scale.lerp(target_flame_scale, _smooth_weight(8.0, delta))
+	var target_inner_scale := _base_inner_flame_scale * Vector3(1.0 - _visual_intensity * 0.015, 1.0 + (flame_stretch - 1.0) * 0.7, 1.0 - _visual_intensity * 0.015)
+	inner_flame.scale = inner_flame.scale.lerp(target_inner_scale, _smooth_weight(9.0, delta))
 
 	var light_pulse := sin(_time * 2.3 + _phase) * 0.08
 	var target_light_energy := _base_light_energy * (1.0 + light_pulse + _visual_intensity * 0.22)

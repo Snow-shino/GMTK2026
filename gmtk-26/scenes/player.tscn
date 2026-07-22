@@ -1,10 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://cmwl5h4dv8abx"]
+[gd_scene format=3 uid="uid://cmwl5h4dv8abx"]
 
 [ext_resource type="Script" uid="uid://oav20n4lfaxn" path="res://scripts/wisp_player.gd" id="1_player"]
 [ext_resource type="Script" uid="uid://dqh7ndjild0mg" path="res://scripts/life_component.gd" id="2_life"]
-[ext_resource type="Script" path="res://scripts/wisp_visual_animation.gd" id="3_visual"]
-[ext_resource type="Shader" path="res://shaders/wisp_flame.gdshader" id="4_flame"]
-[ext_resource type="Shader" path="res://shaders/wisp_particle.gdshader" id="5_particle"]
+[ext_resource type="Script" uid="uid://dqpa3faxj80bb" path="res://scripts/wisp_visual_animation.gd" id="3_visual"]
+[ext_resource type="Shader" uid="uid://b4e7wvkqir6or" path="res://shaders/wisp_flame.gdshader" id="4_flame"]
+[ext_resource type="Shader" uid="uid://cvcy6tr0ric6b" path="res://shaders/wisp_particle.gdshader" id="5_particle"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape_player"]
 radius = 0.45
@@ -14,19 +14,49 @@ height = 1.8
 shading_mode = 0
 albedo_color = Color(0.82, 0.96, 1, 1)
 metallic = 0.0
-roughness = 0.25
+roughness = 0.3
 emission_enabled = true
-emission = Color(0.62, 0.9, 1, 1)
-emission_energy_multiplier = 3.8
+emission = Color(0.68, 0.93, 1, 1)
+emission_energy_multiplier = 3.4
 
 [sub_resource type="SphereMesh" id="SphereMesh_wisp"]
 material = SubResource("Material_wisp")
 radius = 0.39
-height = 0.86
+height = 0.82
+
+[sub_resource type="ShaderMaterial" id="Material_inner_flame"]
+render_priority = 2
+shader = ExtResource("4_flame")
+shader_parameter/flame_speed_1 = 1.75
+shader_parameter/flame_speed_2 = 1.15
+shader_parameter/noise_scale_1 = 4.2
+shader_parameter/noise_scale_2 = 6.4
+shader_parameter/cutoff = 0.48
+shader_parameter/softness = 0.13
+shader_parameter/displacement_strength = 0.035
+shader_parameter/taper_strength = 0.76
+shader_parameter/top_stretch = 0.22
+shader_parameter/inner_color = Color(0.9, 0.985, 1, 1)
+shader_parameter/outer_color = Color(0.16, 0.76, 1, 1)
+shader_parameter/emission_strength = 4.2
+shader_parameter/opacity = 0.46
 
 [sub_resource type="ShaderMaterial" id="Material_flame"]
 render_priority = 1
 shader = ExtResource("4_flame")
+shader_parameter/flame_speed_1 = 1.2
+shader_parameter/flame_speed_2 = 0.72
+shader_parameter/noise_scale_1 = 4.8
+shader_parameter/noise_scale_2 = 7.6
+shader_parameter/cutoff = 0.57
+shader_parameter/softness = 0.1
+shader_parameter/displacement_strength = 0.085
+shader_parameter/taper_strength = 0.86
+shader_parameter/top_stretch = 0.34
+shader_parameter/inner_color = Color(0.34, 0.86, 1, 1)
+shader_parameter/outer_color = Color(0.025, 0.28, 1, 1)
+shader_parameter/emission_strength = 3.2
+shader_parameter/opacity = 0.3
 
 [sub_resource type="SphereMesh" id="SphereMesh_flame"]
 radius = 0.56
@@ -44,6 +74,7 @@ scale_min = 0.09
 scale_max = 0.16
 
 [sub_resource type="ShaderMaterial" id="Material_trail"]
+render_priority = 0
 shader = ExtResource("5_particle")
 shader_parameter/particle_color = Color(0.18, 0.72, 1, 0.82)
 shader_parameter/emission_strength = 4.0
@@ -65,6 +96,7 @@ scale_min = 0.025
 scale_max = 0.07
 
 [sub_resource type="ShaderMaterial" id="Material_ambient"]
+render_priority = 0
 shader = ExtResource("5_particle")
 shader_parameter/particle_color = Color(0.48, 0.88, 1, 0.58)
 shader_parameter/emission_strength = 2.6
@@ -93,12 +125,18 @@ script = ExtResource("3_visual")
 [node name="CoreMesh" type="MeshInstance3D" parent="VisualRoot" unique_id=1774211718]
 mesh = SubResource("SphereMesh_wisp")
 
-[node name="FlameShell" type="MeshInstance3D" parent="VisualRoot"]
+[node name="InnerFlame" type="MeshInstance3D" parent="VisualRoot"]
+unique_name_in_owner = true
+scale = Vector3(0.82, 0.86, 0.82)
+material_override = SubResource("Material_inner_flame")
+mesh = SubResource("SphereMesh_flame")
+
+[node name="FlameShell" type="MeshInstance3D" parent="VisualRoot" unique_id=311178076]
 unique_name_in_owner = true
 material_override = SubResource("Material_flame")
 mesh = SubResource("SphereMesh_flame")
 
-[node name="EmberTrail" type="GPUParticles3D" parent="VisualRoot"]
+[node name="EmberTrail" type="GPUParticles3D" parent="VisualRoot" unique_id=530556387]
 unique_name_in_owner = true
 amount = 48
 amount_ratio = 0.08
@@ -110,14 +148,14 @@ fixed_fps = 30
 process_material = SubResource("Particles_trail")
 draw_pass_1 = SubResource("QuadMesh_trail")
 
-[node name="AmbientSparks" type="GPUParticles3D" parent="VisualRoot"]
+[node name="AmbientSparks" type="GPUParticles3D" parent="VisualRoot" unique_id=1009128538]
 unique_name_in_owner = true
 amount = 12
 amount_ratio = 0.65
 lifetime = 2.6
 randomness = 0.8
-visibility_aabb = AABB(-2, -2, -2, 4, 5, 4)
 fixed_fps = 24
+visibility_aabb = AABB(-2, -2, -2, 4, 5, 4)
 process_material = SubResource("Particles_ambient")
 draw_pass_1 = SubResource("QuadMesh_ambient")
 
