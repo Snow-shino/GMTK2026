@@ -30,3 +30,6 @@ Desktop.ini
 *.tmp
 *.bak
 *.orig
+
+# Local exports (regenerate with build-web.ps1)
+/build/
