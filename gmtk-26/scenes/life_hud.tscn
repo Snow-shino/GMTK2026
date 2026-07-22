@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://uvp1lno5ww1a"]
 
-[ext_resource type="Script" path="res://scripts/life_hud.gd" id="1_hud"]
+[ext_resource type="Script" uid="uid://bo4lmnergex8i" path="res://scripts/life_hud.gd" id="1_hud"]
 
-[node name="LifeHUD" type="CanvasLayer"]
+[node name="LifeHUD" type="CanvasLayer" unique_id=1609184828]
 unique_name_in_owner = true
 script = ExtResource("1_hud")
 
-[node name="LifeBar" type="ProgressBar" parent="."]
+[node name="LifeBar" type="ProgressBar" parent="." unique_id=1276415485]
 unique_name_in_owner = true
 offset_left = 24.0
 offset_top = 24.0
