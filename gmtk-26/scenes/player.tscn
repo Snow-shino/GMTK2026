@@ -10,6 +10,29 @@
 radius = 0.45
 height = 1.8
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
+render_priority = 0
+shader = ExtResource("4_flame")
+shader_parameter/flame_speed_1 = 1.35
+shader_parameter/flame_speed_2 = 0.82
+shader_parameter/noise_scale_1 = 4.6
+shader_parameter/noise_scale_2 = 7.3
+shader_parameter/cutoff = 0.45999998971808
+shader_parameter/softness = 0.11
+shader_parameter/displacement_strength = 0.075
+shader_parameter/taper_strength = 0.82
+shader_parameter/top_stretch = 0.28
+shader_parameter/inner_color = Color(1, 1, 1, 1)
+shader_parameter/outer_color = Color(0.04, 0.42, 1, 1)
+shader_parameter/emission_strength = 3.0
+shader_parameter/opacity = 0.34
+shader_parameter/motion_dir_local = Vector3(0, 0, 0)
+shader_parameter/motion_strength = 0.0
+shader_parameter/drag_strength = 0.18
+shader_parameter/drag_curve = 1.8
+shader_parameter/side_sway_from_motion = 0.08
+shader_parameter/motion_stretch_y = 0.1
+
 [sub_resource type="StandardMaterial3D" id="Material_wisp"]
 shading_mode = 0
 albedo_color = Color(0.82, 0.96, 1, 1)
@@ -28,7 +51,7 @@ height = 0.82
 render_priority = 2
 shader = ExtResource("4_flame")
 shader_parameter/flame_speed_1 = 1.75
-shader_parameter/flame_speed_2 = 1.15
+shader_parameter/flame_speed_2 = 2.20000003278264
 shader_parameter/noise_scale_1 = 4.2
 shader_parameter/noise_scale_2 = 6.4
 shader_parameter/cutoff = 0.48
@@ -40,6 +63,16 @@ shader_parameter/inner_color = Color(0.9, 0.985, 1, 1)
 shader_parameter/outer_color = Color(0.16, 0.76, 1, 1)
 shader_parameter/emission_strength = 4.2
 shader_parameter/opacity = 0.46
+shader_parameter/motion_dir_local = Vector3(0, 0, 0)
+shader_parameter/motion_strength = 0.0
+shader_parameter/drag_strength = 0.26
+shader_parameter/drag_curve = 1.5
+shader_parameter/side_sway_from_motion = 0.1
+shader_parameter/motion_stretch_y = 0.13
+
+[sub_resource type="SphereMesh" id="SphereMesh_flame"]
+radius = 0.56
+height = 1.45
 
 [sub_resource type="ShaderMaterial" id="Material_flame"]
 render_priority = 1
@@ -57,10 +90,12 @@ shader_parameter/inner_color = Color(0.34, 0.86, 1, 1)
 shader_parameter/outer_color = Color(0.025, 0.28, 1, 1)
 shader_parameter/emission_strength = 3.2
 shader_parameter/opacity = 0.3
-
-[sub_resource type="SphereMesh" id="SphereMesh_flame"]
-radius = 0.56
-height = 1.45
+shader_parameter/motion_dir_local = Vector3(0, 0, 0)
+shader_parameter/motion_strength = 0.0
+shader_parameter/drag_strength = 0.4
+shader_parameter/drag_curve = 1.35
+shader_parameter/side_sway_from_motion = 0.12
+shader_parameter/motion_stretch_y = 0.17
 
 [sub_resource type="ParticleProcessMaterial" id="Particles_trail"]
 emission_shape = 1
@@ -81,7 +116,6 @@ shader_parameter/emission_strength = 4.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_trail"]
 material = SubResource("Material_trail")
-size = Vector2(1, 1)
 orientation = 1
 
 [sub_resource type="ParticleProcessMaterial" id="Particles_ambient"]
@@ -103,7 +137,6 @@ shader_parameter/emission_strength = 2.6
 
 [sub_resource type="QuadMesh" id="QuadMesh_ambient"]
 material = SubResource("Material_ambient")
-size = Vector2(1, 1)
 orientation = 1
 
 [sub_resource type="SphereShape3D" id="SphereShape_arm"]
@@ -123,11 +156,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 script = ExtResource("3_visual")
 
 [node name="CoreMesh" type="MeshInstance3D" parent="VisualRoot" unique_id=1774211718]
+transform = Transform3D(0.615, 0, 0, 0, 0.615, 0, 0, 0, 0.615, 0, 0, 0)
 mesh = SubResource("SphereMesh_wisp")
 
-[node name="InnerFlame" type="MeshInstance3D" parent="VisualRoot"]
+[node name="InnerFlame" type="MeshInstance3D" parent="VisualRoot" unique_id=2082063112]
 unique_name_in_owner = true
-scale = Vector3(0.82, 0.86, 0.82)
+transform = Transform3D(0.82, 0, 0, 0, 0.86, 0, 0, 0, 0.82, 0, 0, 0)
 material_override = SubResource("Material_inner_flame")
 mesh = SubResource("SphereMesh_flame")
 
@@ -143,8 +177,6 @@ amount_ratio = 0.08
 lifetime = 1.6
 randomness = 0.55
 visibility_aabb = AABB(-5, -3, -5, 10, 8, 10)
-local_coords = false
-fixed_fps = 30
 process_material = SubResource("Particles_trail")
 draw_pass_1 = SubResource("QuadMesh_trail")
 
@@ -164,7 +196,6 @@ unique_name_in_owner = true
 light_color = Color(0.25, 0.75, 1, 1)
 light_energy = 1.45
 omni_range = 4.5
-shadow_enabled = false
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1982469868]
 unique_name_in_owner = true

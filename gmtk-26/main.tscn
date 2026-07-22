@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_level"]
 [ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://scenes/life_collectible.tscn" id="3_collectible"]
-[ext_resource type="PackedScene" path="res://scenes/life_hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="4_hud"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="6_7mycd"]
 
 [sub_resource type="Environment" id="Environment_forest"]
 background_mode = 1
@@ -37,12 +39,6 @@ size = Vector3(2, 2, 2)
 [sub_resource type="BoxShape3D" id="BoxShape_obstacle"]
 size = Vector3(2, 2, 2)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_pillar"]
-material = SubResource("Material_obstacle")
-top_radius = 0.7
-bottom_radius = 1.0
-height = 4.0
-
 [sub_resource type="CylinderShape3D" id="CylinderShape_pillar"]
 height = 4.0
 radius = 1.0
@@ -60,12 +56,24 @@ light_energy = 0.8
 shadow_enabled = true
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=1815939254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, 0, -27.40756)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=937822241]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 mesh = SubResource("BoxMesh_ground")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1711182998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape_ground")
+
+[node name="Ground" type="StaticBody3D" parent="Ground" unique_id=345556054]
+transform = Transform3D(3.9037347, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, -40.902462, -27.407543)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground/Ground" unique_id=1723313734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("BoxMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/Ground" unique_id=231615739]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
 shape = SubResource("BoxShape_ground")
 
@@ -79,10 +87,9 @@ mesh = SubResource("BoxMesh_obstacle")
 shape = SubResource("BoxShape_obstacle")
 
 [node name="ObstaclePillar" type="StaticBody3D" parent="." unique_id=1455097512]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, -5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 4.592209)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ObstaclePillar" unique_id=1142808760]
-mesh = SubResource("CylinderMesh_pillar")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ObstaclePillar" unique_id=404157969]
 shape = SubResource("CylinderShape_pillar")
@@ -111,4 +118,18 @@ restore_amount = 25.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.8, -7)
 restore_amount = 50.0
 
+[node name="LifeCollectibleLarge" parent="LifeCollectibleLarge" unique_id=1791244311 instance=ExtResource("3_collectible")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.8, -65.7484)
+restore_amount = 50.0
+
+[node name="LifeCollectibleLarge" parent="LifeCollectibleLarge/LifeCollectibleLarge" unique_id=1029052995 instance=ExtResource("3_collectible")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.8000001, -73.464325)
+restore_amount = 50.0
+
 [node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("4_hud")]
+
+[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("5_lquwl")]
+transform = Transform3D(-0.15307179, 0, 0.9882151, 0, 1, 0, -0.9882151, 0, -0.15307179, -4.014366, 0, 7.4483304)
+
+[node name="tree" parent="." unique_id=614217166 instance=ExtResource("6_7mycd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.6802692)
