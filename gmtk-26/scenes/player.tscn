@@ -41,6 +41,7 @@ light_energy = 2.0
 shadow_enabled = true
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1982469868]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.96592593, 0.2588187, 0, -0.2588187, 0.96592593, 0, 1.5, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=560979490]

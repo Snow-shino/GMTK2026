@@ -9,25 +9,47 @@ signal life_depleted
 @export_range(0.1, 100.0, 0.1) var acceleration: float = 24.0
 @export_range(0.1, 100.0, 0.1) var deceleration: float = 30.0
 @export_range(0.1, 30.0, 0.1) var rotation_speed: float = 10.0
-@export_range(0.1, 30.0, 0.1) var jump_velocity: float = 8.5
+@export_range(0.1, 30.0, 0.1) var jump_velocity: float = 9.5
 
 @export_category("Air Movement")
-@export_range(0.1, 100.0, 0.1) var upward_gravity: float = 20.0
-@export_range(0.1, 100.0, 0.1) var downward_gravity: float = 32.0
+@export_range(0.1, 100.0, 0.1) var upward_gravity: float = 16.0
+@export_range(0.1, 100.0, 0.1) var downward_gravity: float = 22.0
 @export_range(0.0, 1.0, 0.05) var jump_cut_multiplier: float = 0.45
 @export_range(0.1, 100.0, 0.1) var air_acceleration: float = 22.0
 @export_range(0.0, 100.0, 0.1) var air_deceleration: float = 5.0
 @export_range(0.1, 30.0, 0.1) var max_air_speed: float = 6.5
 
+@export_category("Camera")
+@export_range(0.01, 1.0, 0.01) var mouse_sensitivity: float = 0.15
+@export_range(-89.0, 0.0, 1.0) var min_camera_pitch: float = -60.0
+@export_range(0.0, 89.0, 1.0) var max_camera_pitch: float = 35.0
+
 @onready var camera: Camera3D = %Camera3D
+@onready var camera_pivot: Node3D = %CameraPivot
 @onready var visual: Node3D = %Visual
 @onready var life: Node = %LifeComponent
 
 func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	add_to_group("player")
 	life.life_changed.connect(_on_life_changed)
 	life.life_depleted.connect(_on_life_depleted)
 	life.life_changed.emit(life.current_life, life.max_life)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		camera_pivot.rotation.y -= deg_to_rad(event.relative.x * mouse_sensitivity)
+		camera_pivot.rotation.x -= deg_to_rad(event.relative.y * mouse_sensitivity)
+		camera_pivot.rotation.x = clampf(
+			camera_pivot.rotation.x,
+			deg_to_rad(min_camera_pitch),
+			deg_to_rad(max_camera_pitch)
+		)
+	elif event.is_action_pressed("ui_cancel"):
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	elif event is InputEventMouseButton and event.pressed:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _physics_process(delta: float) -> void:
