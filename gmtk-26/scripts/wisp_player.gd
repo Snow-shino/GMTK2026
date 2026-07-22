@@ -8,7 +8,6 @@ signal life_depleted
 @export_range(0.1, 30.0, 0.1) var move_speed: float = 6.0
 @export_range(0.1, 100.0, 0.1) var acceleration: float = 24.0
 @export_range(0.1, 100.0, 0.1) var deceleration: float = 30.0
-@export_range(0.1, 30.0, 0.1) var rotation_speed: float = 10.0
 @export_range(0.1, 30.0, 0.1) var jump_velocity: float = 9.5
 
 @export_category("Air Movement")
@@ -26,7 +25,6 @@ signal life_depleted
 
 @onready var camera: Camera3D = %Camera3D
 @onready var camera_pivot: Node3D = %CameraPivot
-@onready var visual: Node3D = %Visual
 @onready var life: Node = %LifeComponent
 
 func _ready() -> void:
@@ -81,10 +79,6 @@ func _physics_process(delta: float) -> void:
 		change_rate = air_acceleration if not move_direction.is_zero_approx() else air_deceleration
 	velocity.x = move_toward(velocity.x, target_velocity.x, change_rate * delta)
 	velocity.z = move_toward(velocity.z, target_velocity.z, change_rate * delta)
-
-	if not move_direction.is_zero_approx():
-		var target_angle := atan2(-move_direction.x, -move_direction.z)
-		visual.rotation.y = lerp_angle(visual.rotation.y, target_angle, rotation_speed * delta)
 
 	move_and_slide()
 
