@@ -21,8 +21,8 @@ emission_energy_multiplier = 3.8
 
 [sub_resource type="SphereMesh" id="SphereMesh_wisp"]
 material = SubResource("Material_wisp")
-radius = 0.38
-height = 1.12
+radius = 0.39
+height = 0.86
 
 [sub_resource type="ShaderMaterial" id="Material_flame"]
 render_priority = 1

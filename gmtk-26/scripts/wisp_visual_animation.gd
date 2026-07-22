@@ -43,6 +43,9 @@ var _body: CharacterBody3D
 var _previous_velocity := Vector3.ZERO
 var _previous_grounded := true
 var _previous_direction := Vector3.ZERO
+var _smoothed_direction := Vector3.ZERO
+var _smoothed_turn := 0.0
+var _smoothed_pitch := 0.0
 var _time := 0.0
 var _phase := 0.0
 var _facing_yaw := 0.0
@@ -88,7 +91,13 @@ func _process(delta: float) -> void:
 	var horizontal_speed := horizontal_velocity.length()
 	var speed_ratio := clampf(horizontal_speed / maxf(speed_for_full_emission, 0.1), 0.0, 1.0)
 	_visual_intensity = lerpf(_visual_intensity, speed_ratio, _smooth_weight(6.0, delta))
-	var movement_direction := horizontal_velocity.normalized() if horizontal_speed > 0.05 else Vector3.ZERO
+	var raw_direction := horizontal_velocity.normalized() if horizontal_speed > 0.15 else Vector3.ZERO
+	if not raw_direction.is_zero_approx():
+		if _smoothed_direction.is_zero_approx():
+			_smoothed_direction = raw_direction
+		else:
+			_smoothed_direction = _smoothed_direction.slerp(raw_direction, _smooth_weight(9.0, delta)).normalized()
+	var movement_direction := _smoothed_direction if horizontal_speed > 0.15 else Vector3.ZERO
 
 	if _previous_grounded and not grounded and _body.velocity.y > 0.0:
 		_jump_time = 0.0
@@ -114,21 +123,25 @@ func _process(delta: float) -> void:
 		var movement_right := Vector3(-movement_direction.z, 0.0, movement_direction.x)
 		weave_offset = movement_right * sin(_time * move_bob_speed * 0.85 + _phase) * move_weave_amplitude * speed_ratio
 
-	var turn_amount := 0.0
+	var target_turn := 0.0
 	if not movement_direction.is_zero_approx() and not _previous_direction.is_zero_approx():
-		turn_amount = clampf(
-			_previous_direction.signed_angle_to(movement_direction, Vector3.UP) / maxf(delta * 8.0, 0.001),
+		target_turn = clampf(
+			(_previous_direction.signed_angle_to(movement_direction, Vector3.UP) / maxf(delta, 0.001)) / deg_to_rad(220.0),
 			-1.0,
 			1.0
 		)
-	var turn_lean := deg_to_rad(max_turn_lean_degrees) * turn_amount
+		if absf(target_turn) < 0.025:
+			target_turn = 0.0
+	_smoothed_turn = lerpf(_smoothed_turn, target_turn, _smooth_weight(turn_lean_speed, delta))
+	var turn_lean := deg_to_rad(max_turn_lean_degrees) * _smoothed_turn
 	var turn_curve_offset := Vector3.ZERO
 	if not movement_direction.is_zero_approx():
-		turn_curve_offset = Vector3(-movement_direction.z, 0.0, movement_direction.x) * turn_amount * move_weave_amplitude * 0.65
+		turn_curve_offset = Vector3(-movement_direction.z, 0.0, movement_direction.x) * _smoothed_turn * move_weave_amplitude * 0.65
 
 	var horizontal_acceleration := (horizontal_velocity - Vector3(_previous_velocity.x, 0.0, _previous_velocity.z)) / maxf(delta, 0.001)
 	var forward_acceleration := horizontal_acceleration.dot(movement_direction) if not movement_direction.is_zero_approx() else 0.0
-	var acceleration_pitch := -deg_to_rad(acceleration_pitch_degrees) * clampf(forward_acceleration / 24.0, -1.0, 1.0)
+	var target_pitch := -deg_to_rad(acceleration_pitch_degrees) * clampf(forward_acceleration / 24.0, -1.0, 1.0)
+	_smoothed_pitch = lerpf(_smoothed_pitch, target_pitch, _smooth_weight(8.0, delta))
 
 	if not movement_direction.is_zero_approx():
 		var target_yaw := atan2(-movement_direction.x, -movement_direction.z)
@@ -162,7 +175,7 @@ func _process(delta: float) -> void:
 	var target_position := base_position
 	target_position += Vector3.UP * (bob + _jump_offset - landing_offset_amount * _landing_strength)
 	target_position += idle_sway + weave_offset + turn_curve_offset
-	var target_rotation := base_rotation + Vector3(acceleration_pitch, _facing_yaw, -turn_lean)
+	var target_rotation := base_rotation + Vector3(_smoothed_pitch, _facing_yaw, -turn_lean)
 	var target_scale := base_scale * procedural_scale
 	var smoothing := _smooth_weight(visual_smoothing, delta)
 	position = position.lerp(target_position, smoothing)
