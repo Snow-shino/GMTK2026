@@ -17,7 +17,7 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 
 	_collected = true
-	monitoring = false
+	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
 	for child in get_children():
 		if child is CollisionShape3D:
