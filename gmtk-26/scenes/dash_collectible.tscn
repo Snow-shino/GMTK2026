@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bhb6wmbfr3n3o"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u6idi"]
+radius = 0.75
+
+[sub_resource type="StandardMaterial3D" id="Material_collectible"]
+shading_mode = 0
+albedo_color = Color(0.80784315, 0.6509804, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_wdbi6"]
+material = SubResource("Material_collectible")
+radius = 0.35
+height = 0.7
+
+[node name="DashCollectible" type="Area3D" unique_id=1621690256]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1231726164]
+shape = SubResource("SphereShape3D_u6idi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1744237204]
+mesh = SubResource("SphereMesh_wdbi6")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1695113081]
+light_color = Color(0.80784315, 0.6509804, 1, 1)
+light_energy = 1.5
+omni_range = 3.0

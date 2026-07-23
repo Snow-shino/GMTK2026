@@ -29,12 +29,20 @@ signal life_depleted
 @export_range(-89.0, 0.0, 1.0) var min_camera_pitch: float = -60.0
 @export_range(0.0, 89.0, 1.0) var max_camera_pitch: float = 35.0
 
+@export_category("Dash")
+@export_range(0.1, 1000.0, 0.1) var dash_speed: float = 25.0
+@export_range(0.1, 5.0, 0.1) var dash_duration: float = 0.5
+
+var has_dash_powerup := true
+var is_dashing := false
+var dash_velocity: Vector3 = Vector3.ZERO
+@export var dash_decay: float = 300.0
+
 @onready var camera: Camera3D = %Camera3D
 @onready var camera_pivot: Node3D = %CameraPivot
 @onready var life: Node = %LifeComponent
 
 var _camera_follow_offset := Vector3.ZERO
-
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -108,6 +116,8 @@ func _physics_process(delta: float) -> void:
 func _handle_jump_and_gravity(delta: float, grounded: bool) -> void:
 	if grounded and Input.is_action_just_pressed("jump"):
 		velocity.y = jump_velocity
+	elif Input.is_action_just_pressed("dash"):
+		dash()
 
 	if Input.is_action_just_released("jump") and velocity.y > 0.0:
 		velocity.y *= jump_cut_multiplier
@@ -212,6 +222,16 @@ func get_max_life() -> float:
 func _on_life_changed(current_life: float, max_life: float) -> void:
 	life_changed.emit(current_life, max_life)
 
+func dash() -> void:
+	if not has_dash_powerup:
+		return
+
+	has_dash_powerup = false
+
+	var dash_direction := -visual.global_basis.z
+
+	velocity.x = dash_direction.x * dash_speed
+	velocity.z = dash_direction.z * dash_speed
 
 func _on_life_depleted() -> void:
 	life_depleted.emit()
