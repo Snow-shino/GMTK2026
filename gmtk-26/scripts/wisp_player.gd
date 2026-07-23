@@ -10,13 +10,19 @@ signal life_depleted
 @export_range(0.1, 100.0, 0.1) var deceleration: float = 30.0
 @export_range(0.1, 30.0, 0.1) var rotation_speed: float = 10.0
 @export_range(0.1, 30.0, 0.1) var jump_velocity: float = 7.0
+@export_range(0.1, 1000.0, 0.1) var dash_speed: float = 25.0
+@export_range(0.1, 5.0, 0.1) var dash_duration: float = 0.5
+
+var has_dash_powerup := true
+var is_dashing := false
+var dash_velocity: Vector3 = Vector3.ZERO
+@export var dash_decay: float = 300.0
 
 @onready var camera: Camera3D = %Camera3D
 @onready var visual: Node3D = %Visual
 @onready var life: Node = %LifeComponent
 
 var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity", 9.8)
-
 
 func _ready() -> void:
 	add_to_group("player")
@@ -30,6 +36,8 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= _gravity * delta
 	elif Input.is_action_just_pressed("jump"):
 		velocity.y = jump_velocity
+	elif Input.is_action_just_pressed("dash"):
+		dash()
 
 	var input_vector := Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var camera_forward := -camera.global_basis.z
@@ -79,6 +87,16 @@ func get_max_life() -> float:
 func _on_life_changed(current_life: float, max_life: float) -> void:
 	life_changed.emit(current_life, max_life)
 
+func dash() -> void:
+	if not has_dash_powerup:
+		return
+
+	has_dash_powerup = false
+
+	var dash_direction := -visual.global_basis.z
+
+	velocity.x = dash_direction.x * dash_speed
+	velocity.z = dash_direction.z * dash_speed
 
 func _on_life_depleted() -> void:
 	life_depleted.emit()
