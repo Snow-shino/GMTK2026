@@ -214,7 +214,8 @@ fov = 65.0
 [node name="LifeComponent" type="Node" parent="." unique_id=835234636]
 unique_name_in_owner = true
 script = ExtResource("2_life")
-starting_life = 70.0
+starting_life = 100.0
+drain_rate = 4.5
 
 [node name="EffectsAudio" type="AudioStreamPlayer3D" parent="."]
 unique_name_in_owner = true

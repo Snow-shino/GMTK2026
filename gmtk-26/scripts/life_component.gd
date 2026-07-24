@@ -7,7 +7,7 @@ signal life_depleted
 @export_category("Life Left")
 @export_range(0.1, 1000.0, 0.1) var max_life: float = 100.0
 @export_range(0.0, 1000.0, 0.1) var starting_life: float = 100.0
-@export_range(0.0, 100.0, 0.1) var drain_rate: float = 2.0
+@export_range(0.0, 100.0, 0.1) var drain_rate: float = 4.5
 
 var current_life: float
 var drain_enabled := true

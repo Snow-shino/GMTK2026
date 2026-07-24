@@ -1,6 +1,25 @@
-[gd_scene format=3 uid="uid://uvp1lno5ww1a"]
+[gd_scene load_steps=4 format=3 uid="uid://uvp1lno5ww1a"]
 
 [ext_resource type="Script" uid="uid://bo4lmnergex8i" path="res://scripts/life_hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_background"]
+bg_color = Color(0.015, 0.025, 0.045, 0.88)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.62, 0.78, 0.55)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_fill"]
+bg_color = Color(0.25, 0.82, 1, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="LifeHUD" type="CanvasLayer" unique_id=1609184828]
 unique_name_in_owner = true
@@ -8,9 +27,23 @@ script = ExtResource("1_hud")
 
 [node name="LifeBar" type="ProgressBar" parent="." unique_id=1276415485]
 unique_name_in_owner = true
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 324.0
-offset_bottom = 52.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -72.0
+offset_right = 230.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBox_background")
+theme_override_styles/fill = SubResource("StyleBox_fill")
+value = 100.0
+rounded = true
+allow_greater = false
+allow_lesser = false
+pivot_offset = Vector2(230, 6)
 show_percentage = false

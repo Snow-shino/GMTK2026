@@ -13,29 +13,32 @@ const MUSIC_REGION_SCENE := preload("res://scenes/area_music_region.tscn")
 
 
 func _enter_tree() -> void:
-	var level_goal := GOAL_SCENE.instantiate() as LevelGoal
-	level_goal.name = "LevelGoal"
-	level_goal.unique_name_in_owner = true
-	level_goal.position = goal_position
-	level_goal.next_level_path = next_level_path
-	level_goal.main_menu_path = main_menu_path
-	level_goal.completion_delay = completion_delay
-	add_child(level_goal)
+	if not has_node("LevelGoal"):
+		var level_goal := GOAL_SCENE.instantiate() as LevelGoal
+		level_goal.name = "LevelGoal"
+		level_goal.unique_name_in_owner = true
+		level_goal.position = goal_position
+		level_goal.next_level_path = next_level_path
+		level_goal.main_menu_path = main_menu_path
+		level_goal.completion_delay = completion_delay
+		add_child(level_goal)
 
-	var screen := RESULT_SCREEN_SCENE.instantiate() as LevelResultScreen
-	screen.name = "LevelResultScreen"
-	screen.unique_name_in_owner = true
-	add_child(screen)
+	if not has_node("LevelResultScreen"):
+		var screen := RESULT_SCREEN_SCENE.instantiate() as LevelResultScreen
+		screen.name = "LevelResultScreen"
+		screen.unique_name_in_owner = true
+		add_child(screen)
 
-	_add_audio_player("BackgroundMusic")
-	_add_audio_player("AmbientLoop")
-	_add_audio_player("StateAudio")
+	for audio_name in ["BackgroundMusic", "AmbientLoop", "StateAudio"]:
+		if not has_node(audio_name):
+			_add_audio_player(audio_name)
 
-	var music_region := MUSIC_REGION_SCENE.instantiate() as AreaMusicRegion
-	music_region.name = "AreaMusicRegion"
-	music_region.position = area_music_position
-	music_region.music_player_path = NodePath("../BackgroundMusic")
-	add_child(music_region)
+	if not has_node("AreaMusicRegion"):
+		var music_region := MUSIC_REGION_SCENE.instantiate() as AreaMusicRegion
+		music_region.name = "AreaMusicRegion"
+		music_region.position = area_music_position
+		music_region.music_player_path = NodePath("../BackgroundMusic")
+		add_child(music_region)
 
 
 func _ready() -> void:

@@ -28,8 +28,8 @@ func _ready() -> void:
 
 
 func show_completion(remaining_life: float, next_path: String, menu_path: String) -> void:
-	_next_level_path = next_path
-	_main_menu_path = menu_path
+	_next_level_path = _resolve_scene_path(next_path)
+	_main_menu_path = _resolve_scene_path(menu_path)
 	title_label.text = "LEVEL COMPLETE"
 	life_label.text = "Life Essence Remaining: %.1f" % remaining_life
 	life_label.show()
@@ -40,7 +40,7 @@ func show_completion(remaining_life: float, next_path: String, menu_path: String
 
 func show_failure(menu_path: String) -> void:
 	_next_level_path = ""
-	_main_menu_path = menu_path
+	_main_menu_path = _resolve_scene_path(menu_path)
 	title_label.text = "LIGHT EXTINGUISHED"
 	life_label.hide()
 	next_button.hide()
@@ -90,6 +90,34 @@ func _begin_navigation() -> bool:
 
 func _is_valid_scene(path: String) -> bool:
 	return not path.is_empty() and ResourceLoader.exists(path, "PackedScene")
+
+
+func _resolve_scene_path(path: String) -> String:
+	if not path.begins_with("uid://"):
+		return path
+	var resource_id := ResourceUID.text_to_id(path)
+	if resource_id == ResourceUID.INVALID_ID:
+		return ""
+	if ResourceUID.has_id(resource_id):
+		return ResourceUID.get_id_path(resource_id)
+	return _find_scene_by_uid("res://", path)
+
+
+func _find_scene_by_uid(directory_path: String, uid_text: String) -> String:
+	for file_name in DirAccess.get_files_at(directory_path):
+		if not file_name.ends_with(".tscn"):
+			continue
+		var scene_path := directory_path.path_join(file_name)
+		var file := FileAccess.open(scene_path, FileAccess.READ)
+		if file != null and file.get_line().contains(uid_text):
+			return scene_path
+	for directory_name in DirAccess.get_directories_at(directory_path):
+		if directory_name.begins_with("."):
+			continue
+		var found := _find_scene_by_uid(directory_path.path_join(directory_name), uid_text)
+		if not found.is_empty():
+			return found
+	return ""
 
 
 func _play_hover() -> void:
