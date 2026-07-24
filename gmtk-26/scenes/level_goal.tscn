@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_goal.gd" id="1_goal"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape_goal"]
+height = 4.0
+radius = 1.5
+
+[sub_resource type="StandardMaterial3D" id="Material_goal"]
+shading_mode = 0
+transparency = 1
+albedo_color = Color(0.18, 0.75, 1, 0.55)
+emission_enabled = true
+emission = Color(0.1, 0.65, 1, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_goal"]
+material = SubResource("Material_goal")
+top_radius = 0.35
+bottom_radius = 1.35
+height = 4.0
+radial_segments = 24
+
+[node name="LevelGoal" type="Area3D"]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_goal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape_goal")
+
+[node name="GoalMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_goal")
+
+[node name="GoalAudio" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
