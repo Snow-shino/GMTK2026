@@ -33,7 +33,7 @@ signal life_depleted
 @export_range(0.1, 1000.0, 0.1) var dash_speed: float = 25.0
 @export_range(0.1, 5.0, 0.1) var dash_duration: float = 0.5
 
-var has_dash_powerup := true
+var has_dash_powerup := false
 var is_dashing := false
 var dash_velocity: Vector3 = Vector3.ZERO
 @export var dash_decay: float = 300.0
