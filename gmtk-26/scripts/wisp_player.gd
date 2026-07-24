@@ -31,12 +31,13 @@ signal life_depleted
 
 @export_category("Dash")
 @export_range(0.1, 1000.0, 0.1) var dash_speed: float = 25.0
-@export_range(0.1, 5.0, 0.1) var dash_duration: float = 0.5
+@export_range(0.05, 1.0, 0.01) var dash_duration: float = 0.22
 
 var has_dash_powerup := false
 var is_dashing := false
 var dash_velocity: Vector3 = Vector3.ZERO
 @export var dash_decay: float = 300.0
+var _dash_time_left := 0.0
 
 @onready var camera: Camera3D = %Camera3D
 @onready var camera_pivot: Node3D = %CameraPivot
@@ -77,8 +78,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("dash"):
+		dash()
+
 	var grounded := is_on_floor()
-	_handle_jump_and_gravity(delta, grounded)
+	if not is_dashing:
+		_handle_jump_and_gravity(delta, grounded)
 
 	var input_vector := Input.get_vector(
 		"move_left",
@@ -91,7 +96,12 @@ func _physics_process(delta: float) -> void:
 	var move_direction := _get_camera_relative_direction(input_vector)
 	var horizontal_velocity := Vector3(velocity.x, 0.0, velocity.z)
 
-	if grounded:
+	if is_dashing:
+		horizontal_velocity = dash_velocity
+		_dash_time_left -= delta
+		if _dash_time_left <= 0.0:
+			is_dashing = false
+	elif grounded:
 		horizontal_velocity = _update_ground_velocity(
 			horizontal_velocity,
 			move_direction,
@@ -116,8 +126,6 @@ func _physics_process(delta: float) -> void:
 func _handle_jump_and_gravity(delta: float, grounded: bool) -> void:
 	if grounded and Input.is_action_just_pressed("jump"):
 		velocity.y = jump_velocity
-	elif Input.is_action_just_pressed("dash"):
-		dash()
 
 	if Input.is_action_just_released("jump") and velocity.y > 0.0:
 		velocity.y *= jump_cut_multiplier
@@ -223,15 +231,19 @@ func _on_life_changed(current_life: float, max_life: float) -> void:
 	life_changed.emit(current_life, max_life)
 
 func dash() -> void:
-	if not has_dash_powerup:
+	if not has_dash_powerup or is_dashing:
 		return
 
 	has_dash_powerup = false
-
+	is_dashing = true
+	_dash_time_left = dash_duration
 	var dash_direction: Vector3 = -global_basis.z
-
-	velocity.x = dash_direction.x * dash_speed
-	velocity.z = dash_direction.z * dash_speed
+	dash_direction.y = 0.0
+	if dash_direction.length_squared() > 0.0001:
+		dash_direction = dash_direction.normalized()
+	dash_velocity = dash_direction * dash_speed
+	velocity.x = dash_velocity.x
+	velocity.z = dash_velocity.z
 
 func _on_life_depleted() -> void:
 	life_depleted.emit()
