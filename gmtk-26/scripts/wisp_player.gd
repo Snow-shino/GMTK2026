@@ -30,14 +30,23 @@ signal life_depleted
 @export_range(0.0, 89.0, 1.0) var max_camera_pitch: float = 35.0
 
 @export_category("Dash")
-@export_range(0.1, 1000.0, 0.1) var dash_speed: float = 25.0
-@export_range(0.05, 1.0, 0.01) var dash_duration: float = 0.22
-
+@export_range(0.1, 1000.0, 0.1) var dash_speed: float = 55.0
+@export_range(0.05, 1.0, 0.01) var dash_duration: float = 0.43
 var has_dash_powerup := false
 var is_dashing := false
 var dash_velocity: Vector3 = Vector3.ZERO
-@export var dash_decay: float = 300.0
+@export var dash_decay: float = 120.0
 var _dash_time_left := 0.0
+
+@export_category("Flight")
+@export var flight_speed: float = 15.0
+@export var flight_vertical_speed: float = 10.0
+@export var flight_decay: float = 4.0
+
+var has_flight_powerup := false
+var is_flying := false
+
+
 
 @export_category("Audio")
 @export var jump_sound: AudioStream
@@ -108,9 +117,14 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash"):
 		dash()
 
+
 	var grounded := is_on_floor()
 	if not is_dashing:
-		_handle_jump_and_gravity(delta, grounded)
+		if is_flying:
+			_handle_flight(delta)
+		else:
+			_handle_jump_and_gravity(delta, grounded)
+
 
 	var input_vector := Input.get_vector(
 		"move_left",
@@ -124,6 +138,10 @@ func _physics_process(delta: float) -> void:
 	var horizontal_velocity := Vector3(velocity.x, 0.0, velocity.z)
 
 	if is_dashing:
+		dash_velocity = dash_velocity.move_toward(
+			Vector3.ZERO,
+			dash_decay * delta
+		)
 		horizontal_velocity = dash_velocity
 		_dash_time_left -= delta
 		if _dash_time_left <= 0.0:
@@ -155,9 +173,11 @@ func _physics_process(delta: float) -> void:
 
 
 func _handle_jump_and_gravity(delta: float, grounded: bool) -> void:
-	if grounded and Input.is_action_just_pressed("jump"):
+	if grounded and Input.is_action_just_pressed("jump") and not has_flight_powerup:
 		velocity.y = jump_velocity
 		_play_world_sound(jump_sound)
+	elif Input.is_action_just_pressed("jump") and has_flight_powerup:
+		is_flying = true
 
 	if Input.is_action_just_released("jump") and velocity.y > 0.0:
 		velocity.y *= jump_cut_multiplier
@@ -293,10 +313,11 @@ func dash() -> void:
 	is_dashing = true
 	_dash_time_left = dash_duration
 	var dash_direction: Vector3 = -global_basis.z
+	var current_horizontal := Vector3(velocity.x, 0.0, velocity.z)
 	dash_direction.y = 0.0
 	if dash_direction.length_squared() > 0.0001:
 		dash_direction = dash_direction.normalized()
-	dash_velocity = dash_direction * dash_speed
+	dash_velocity = current_horizontal + dash_direction * dash_speed
 	velocity.x = dash_velocity.x
 	velocity.z = dash_velocity.z
 
@@ -304,6 +325,20 @@ func _on_life_depleted() -> void:
 	warning_audio.stop()
 	_play_world_sound(extinguish_sound)
 	life_depleted.emit()
+	
+func _handle_flight(delta: float) -> void:
+	flight_decay -= delta
+
+	if flight_decay <= 0.0:
+		flight_decay = 4.0
+		is_flying = false
+		has_flight_powerup = false
+		return
+
+	if Input.is_action_pressed("jump"):
+		velocity.y = flight_vertical_speed
+	else:
+		velocity.y = -6.0
 
 
 func _play_world_sound(stream: AudioStream) -> void:
