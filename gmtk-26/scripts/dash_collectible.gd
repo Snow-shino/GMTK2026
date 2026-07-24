@@ -1,7 +1,7 @@
 class_name DashCollectible
 extends Area3D
 
-signal collected(collector: Node3D)
+signal collected(collector: Node3D, restore_amount: float)
 @export_range(0.0, 1000.0, 0.1) var restore_amount: float = 20.0
 var _collected = false
 func _ready() -> void:
@@ -12,7 +12,7 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 
 	_collected = true
-	monitoring = false
+	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
 	for child in get_children():
 		if child is CollisionShape3D:

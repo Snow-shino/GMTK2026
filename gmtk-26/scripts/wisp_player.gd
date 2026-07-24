@@ -228,7 +228,7 @@ func dash() -> void:
 
 	has_dash_powerup = false
 
-	var dash_direction := -visual.global_basis.z
+	var dash_direction: Vector3 = -global_basis.z
 
 	velocity.x = dash_direction.x * dash_speed
 	velocity.z = dash_direction.z * dash_speed
