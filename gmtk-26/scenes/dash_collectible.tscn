@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://bhb6wmbfr3n3o"]
 
+[ext_resource type="Script" path="res://scripts/dash_collectible.gd" id="1_dash"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_u6idi"]
 radius = 0.75
 
@@ -13,6 +15,7 @@ radius = 0.35
 height = 0.7
 
 [node name="DashCollectible" type="Area3D" unique_id=1621690256]
+script = ExtResource("1_dash")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1231726164]
 shape = SubResource("SphereShape3D_u6idi")

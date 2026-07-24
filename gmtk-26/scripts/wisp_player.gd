@@ -75,6 +75,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif event is InputEventMouseButton and event.pressed:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			dash()
 
 
 func _physics_process(delta: float) -> void:
