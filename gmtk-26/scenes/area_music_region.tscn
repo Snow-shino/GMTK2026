@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/area_music_region.gd" id="1_music_region"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_music_region"]
+size = Vector3(8, 4, 8)
+
+[node name="AreaMusicRegion" type="Area3D"]
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_music_region")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_music_region")

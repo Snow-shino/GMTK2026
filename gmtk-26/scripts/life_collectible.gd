@@ -5,6 +5,7 @@ signal collected(collector: Node3D, restore_amount: float)
 
 @export_range(0.0, 1000.0, 0.1) var restore_amount: float = 20.0
 @export_range(0.1, 60.0, 0.1) var respawn_time: float = 5.0
+@export var collect_sound: AudioStream
 
 var _collected := false
 var _respawn_timer: Timer
@@ -25,6 +26,14 @@ func _on_body_entered(body: Node3D) -> void:
 	_collected = true
 	_set_available(false)
 	body.add_life(restore_amount)
+	if body.has_method("play_life_collect_sound"):
+		body.play_life_collect_sound()
+	if collect_sound != null:
+		var audio := AudioStreamPlayer3D.new()
+		audio.stream = collect_sound
+		audio.finished.connect(audio.queue_free)
+		add_child(audio)
+		audio.play()
 	collected.emit(body, restore_amount)
 	_respawn_timer.start(respawn_time)
 
