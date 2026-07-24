@@ -1,13 +1,13 @@
-[gd_scene format=3 uid="uid://bgo477a1mv8cl"]
+[gd_scene format=3 uid="uid://dfr1urlnbqo83"]
 
-[ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_level"]
-[ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="2_player"]
-[ext_resource type="PackedScene" path="res://scenes/life_collectible.tscn" id="3_collectible"]
-[ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="4_7mycd"]
-[ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="4_hud"]
-[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="5_lquwl"]
-[ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="6_7mycd"]
-[ext_resource type="PackedScene" path="res://scenes/level_goal.tscn" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_a28et"]
+[ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="2_nu6qx"]
+[ext_resource type="PackedScene" path="res://scenes/life_collectible.tscn" id="3_i4u0b"]
+[ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="4_4u3ci"]
+[ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="5_i3eef"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="6_2egfc"]
+[ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="7_oo4x0"]
+[ext_resource type="PackedScene" path="res://scenes/level_goal.tscn" id="8_873un"]
 
 [sub_resource type="Environment" id="Environment_forest"]
 background_mode = 1
@@ -46,7 +46,7 @@ height = 4.0
 radius = 1.0
 
 [node name="TestLevel" type="Node3D" unique_id=1751151151]
-script = ExtResource("1_level")
+script = ExtResource("1_a28et")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
 environment = SubResource("Environment_forest")
@@ -128,32 +128,31 @@ mesh = SubResource("BoxMesh_obstacle")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LowObstacle" unique_id=281764472]
 shape = SubResource("BoxShape_obstacle")
 
-[node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_player")]
+[node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_nu6qx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
 
-[node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("3_collectible")]
+[node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("3_i4u0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.8, 2)
 restore_amount = 10.0
 
-[node name="LifeCollectibleMedium" parent="." unique_id=2068334197 instance=ExtResource("3_collectible")]
+[node name="LifeCollectibleMedium" parent="." unique_id=2068334197 instance=ExtResource("3_i4u0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.648628, 7.827677, -75.05396)
 restore_amount = 25.0
 
-[node name="LifeCollectibleLarge" parent="." unique_id=841365135 instance=ExtResource("3_collectible")]
+[node name="LifeCollectibleLarge" parent="." unique_id=841365135 instance=ExtResource("3_i4u0b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.241108, 10.606803, -97.80378)
 restore_amount = 50.0
 
-[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("4_7mycd")]
+[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("4_4u3ci")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9113016, 4.5837035, -4.6090474)
 
-[node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("4_hud")]
+[node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("5_i3eef")]
 
-[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("5_lquwl")]
+[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("6_2egfc")]
 transform = Transform3D(-0.15307179, 0, 0.9882151, 0, 1, 0, -0.9882151, 0, -0.15307179, -4.014366, 0, 7.4483304)
 
-[node name="tree" parent="." unique_id=614217166 instance=ExtResource("6_7mycd")]
+[node name="tree" parent="." unique_id=614217166 instance=ExtResource("7_oo4x0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.6802692)
 
-[node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("8_5vw27")]
+[node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("8_873un")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3263817, 3.0944672, -23.137955)
-next_level_path = "uid://dfr1urlnbqo83"
