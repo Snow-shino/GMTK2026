@@ -31,6 +31,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if collect_sound != null:
 		var audio := AudioStreamPlayer3D.new()
 		audio.stream = collect_sound
+		audio.bus = &"SFX"
 		audio.finished.connect(audio.queue_free)
 		add_child(audio)
 		audio.play()

@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="9_bhrca"]
 [ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="10_fdawt"]
 [ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="11_2xw2u"]
+[ext_resource type="PackedScene" uid="uid://bhgumkoverpdh" path="res://Assets/props/platform.tscn" id="11_ss7y8"]
 
 [sub_resource type="Environment" id="Environment_forest"]
 background_mode = 1
@@ -22,10 +23,7 @@ fog_light_color = Color(0.025, 0.045, 0.08, 1)
 fog_light_energy = 0.3
 fog_density = 0.056
 
-[sub_resource type="BoxShape3D" id="BoxShape_ground"]
-size = Vector3(5087.3745, 0.5, 1063.8604)
-
-[node name="TestLevel" type="Node3D" unique_id=1751151151]
+[node name="TestLevel2" type="Node3D" unique_id=1751151151]
 script = ExtResource("1_n8777")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
@@ -37,13 +35,6 @@ light_color = Color(0.35, 0.48, 0.75, 1)
 light_energy = 0.8
 shadow_enabled = true
 
-[node name="Ground" type="StaticBody3D" parent="." unique_id=1815939254]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, 0, -27.40756)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1711182998]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.739685, -0.25, -259.9886)
-shape = SubResource("BoxShape_ground")
-
 [node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_hxv46")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
 
@@ -52,7 +43,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3510599, 8.738557, -10.120
 restore_amount = 10.0
 
 [node name="LifeCollectibleMedium" parent="." unique_id=2068334197 instance=ExtResource("3_pu7c1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0301876, 0.43749332, -33.00374)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1673336, 0.1223135, -27.351019)
 restore_amount = 25.0
 
 [node name="LifeCollectibleLarge" parent="." unique_id=841365135 instance=ExtResource("3_pu7c1")]
@@ -130,20 +121,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.663378, 10.566439, -61.83
 [node name="BranchPlatform2" parent="." unique_id=524878013 instance=ExtResource("11_2xw2u")]
 transform = Transform3D(-0.9240754, -0.05448979, -0.044209246, -0.049355548, 0.99662614, -0.017328024, 0.057147663, -0.020361802, -0.7298274, 63.92113, 13.988814, -61.641678)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1705571768]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 2.8601074, -5.550049, 6.9300203)
-size = Vector3(20.219238, 12.100098, 5.224121)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1189385526]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, -0.74212646, -7.9172387, -30.521288)
-size = Vector3(13.0147705, 12.100098, 5.224121)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=1937403663]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 12.406657, -1.152431, -56.936043)
-use_collision = true
-size = Vector3(13.0147705, 12.100098, 5.224121)
-
 [node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=944750866]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 0.15753174, -19.390808, 27.112614)
 use_collision = true
 size = Vector3(184.81042, 149.4989, 7.4192505)
+
+[node name="Platform" parent="." unique_id=1406972493 instance=ExtResource("11_ss7y8")]
+transform = Transform3D(2.01, 0, 0, 0, 2.01, 0, 0, 0, 2.01, -0.16567421, -3.6296525, 6.790696)
+
+[node name="Platform2" parent="." unique_id=25295075 instance=ExtResource("11_ss7y8")]
+transform = Transform3D(1.8375083, 0, -0.8146552, 0, 2.01, 0, 0.8146552, 0, 1.8375083, -0.16567421, -6.301451, -27.124641)
+
+[node name="Platform3" parent="." unique_id=2078203844 instance=ExtResource("11_ss7y8")]
+transform = Transform3D(0.78036547, 0, 2.8604636, 0, 2.9649997, 0, -2.8604636, 0, 0.78036547, 10.828357, -3.7487035, -56.41472)

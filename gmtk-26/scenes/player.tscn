@@ -196,6 +196,8 @@ script = ExtResource("2_life")
 
 [node name="EffectsAudio" type="AudioStreamPlayer3D" parent="." unique_id=1825294988]
 unique_name_in_owner = true
+bus = &"SFX"
 
 [node name="WarningAudio" type="AudioStreamPlayer" parent="." unique_id=1143372736]
 unique_name_in_owner = true
+bus = &"SFX"

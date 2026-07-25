@@ -136,9 +136,11 @@ horizontal_alignment = 1
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=2017766089]
 unique_name_in_owner = true
+bus = &"Music"
 
 [node name="UIAudio" type="AudioStreamPlayer" parent="." unique_id=1679317598]
 unique_name_in_owner = true
+bus = &"UI"
 
 [node name="LevelSelectScreen" parent="." instance=ExtResource("2_select")]
 unique_name_in_owner = true

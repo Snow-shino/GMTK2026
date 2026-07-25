@@ -45,4 +45,5 @@ func _add_audio_player(node_name: String) -> void:
 	var audio_player := AudioStreamPlayer.new()
 	audio_player.name = node_name
 	audio_player.unique_name_in_owner = true
+	audio_player.bus = &"Music" if node_name in ["BackgroundMusic", "AmbientLoop"] else &"SFX"
 	add_child(audio_player)

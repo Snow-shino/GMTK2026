@@ -82,3 +82,4 @@ text = "BACK"
 
 [node name="UIAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
+bus = &"UI"
