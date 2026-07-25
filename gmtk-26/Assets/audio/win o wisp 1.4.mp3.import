@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cjp2hxy1pdi4i"
+path="res://.godot/imported/win o wisp 1.4.mp3-ec504edebd1ce881885ac3023109e89f.mp3str"
+
+[deps]
+
+source_file="res://Assets/audio/win o wisp 1.4.mp3"
+dest_files=["res://.godot/imported/win o wisp 1.4.mp3-ec504edebd1ce881885ac3023109e89f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
