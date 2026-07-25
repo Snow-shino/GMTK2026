@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://em2p0bufs6t5"]
+
+[ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_5rcp6"]
+[ext_resource type="Texture2D" uid="uid://dykxc4wy814ev" path="res://Assets/props/grass_04_basecolor_1k.png" id="2_t6q68"]
+[ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="3_sd7dy"]
+[ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="4_lxl00"]
+[ext_resource type="PackedScene" uid="uid://cxesm1tn7lsle" path="res://scenes/flight_collectible.tscn" id="5_gtpn3"]
+[ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="6_00bta"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="7_2xlwr"]
+[ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="8_5py6l"]
+[ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="9_gm2da"]
+[ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="10_j2mkx"]
+
+[sub_resource type="Environment" id="Environment_forest"]
+background_mode = 1
+background_color = Color(0.008, 0.012, 0.025, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.08, 0.12, 0.2, 1)
+ambient_light_energy = 0.35
+fog_enabled = true
+fog_light_color = Color(0.025, 0.045, 0.08, 1)
+fog_light_energy = 0.3
+fog_density = 0.018
+
+[sub_resource type="StandardMaterial3D" id="Material_ground"]
+albedo_color = Color(0.035, 0.065, 0.055, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+material = SubResource("Material_ground")
+size = Vector3(30, 0.5, 290.37537)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ycdy4"]
+albedo_color = Color(1.6364455e-06, 0.56246525, 0.6843389, 1)
+albedo_texture = ExtResource("2_t6q68")
+uv1_scale = Vector3(69.51, 69.51, 69.51)
+uv2_scale = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape_ground"]
+size = Vector3(5087.3745, 0.5, 1063.8604)
+
+[node name="TestLevel" type="Node3D" unique_id=1751151151]
+script = ExtResource("1_5rcp6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
+environment = SubResource("Environment_forest")
+
+[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=859006161]
+transform = Transform3D(0.8253356, 0.44229966, -0.3509874, 0, 0.62161, 0.7833269, 0.5646425, -0.6465076, 0.51303685, 0, 0, 0)
+light_color = Color(0.35, 0.48, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1815939254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, 0, -27.40756)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=937822241]
+transform = Transform3D(15.255209, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -117.18973)
+mesh = SubResource("BoxMesh_ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_ycdy4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1711182998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.739685, -0.25, -259.9886)
+shape = SubResource("BoxShape_ground")
+
+[node name="Player" parent="." unique_id=1339558772 instance=ExtResource("3_sd7dy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
+
+[node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("4_lxl00")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3510599, 0.7999981, -10.120325)
+restore_amount = 10.0
+
+[node name="LifeCollectibleLarge" parent="." unique_id=841365135 instance=ExtResource("4_lxl00")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.241108, 10.606803, -97.80378)
+restore_amount = 50.0
+
+[node name="FlightCollectible" parent="." unique_id=1262300711 instance=ExtResource("5_gtpn3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0702963, 2.052578, 8.447543)
+
+[node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("6_00bta")]
+
+[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("7_2xlwr")]
+transform = Transform3D(1.6105909, 1.9805044, 0.33797148, 0.39377618, 0.11359278, -2.5421767, -1.9701682, 1.6417444, -0.23181507, -7.063843, 0, 7.321421)
+
+[node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("8_5py6l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.806398, -0.4539857, -40.413376)
+
+[node name="AreaLight3D" type="AreaLight3D" parent="LevelGoal" unique_id=1377440733]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08631706, 3.537665, 3.2331886)
+light_color = Color(0.8431528, 0.3557573, 5.7756904e-07, 1)
+light_energy = 13.543
+
+[node name="Tree" parent="." unique_id=1107119201 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.57733, 0.019480767, 3.4605255)
+
+[node name="Tree2" parent="." unique_id=1550910758 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.32435, 0.019480767, -58.79595)
+
+[node name="Tree3" parent="." unique_id=1498542618 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.682728, 0.019480767, 17.704697)
+
+[node name="Tree4" parent="." unique_id=1617999930 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 109.209206, 0.019480767, -203.94452)
+
+[node name="Tree5" parent="." unique_id=1549252688 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -91.59522, 0.019480767, -111.74538)
+
+[node name="Tree6" parent="." unique_id=719033934 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -53.267014, 0.019480767, -249.61356)
+
+[node name="Tree" parent="Tree6" unique_id=1238491437 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 37.37606, 0.019465977, 265.9074)
+
+[node name="Tree5" parent="Tree6" unique_id=37561425 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 17.358162, 0.019465977, 150.7015)
+
+[node name="Tree6" parent="Tree6" unique_id=818268989 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 55.68638, 0.019465977, 12.8333435)
+
+[node name="Tree7" parent="Tree6" unique_id=1251515159 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 22.756554, 0.019465977, 78.25134)
+
+[node name="Tree8" parent="Tree6" unique_id=2107655019 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, -23.395317, 0.019465977, 166.05322)
+
+[node name="Tree9" parent="Tree6" unique_id=1629209815 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 12.064812, 0.019493686, 227.43845)
+
+[node name="Tree7" parent="." unique_id=580767650 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.19684, 0.019480767, -184.19556)
+
+[node name="Tree8" parent="." unique_id=395962481 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -132.34871, 0.019480767, -96.39368)
+
+[node name="Tree9" parent="." unique_id=842917873 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.88858, 0.019511284, -35.00846)
+
+[node name="Tree10" parent="." unique_id=649632681 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.619484, 0.019480767, -106.644104)
+
+[node name="Tree11" parent="." unique_id=901502237 instance=ExtResource("9_gm2da")]
+transform = Transform3D(1.795, 0, 0, 0, 1.795, 0, 0, 0, 1.795, -23.023722, 0.019480767, -77.3703)
+
+[node name="BranchPlatform" parent="." unique_id=1577981104 instance=ExtResource("10_j2mkx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.663378, 10.566439, -61.83157)
+
+[node name="BranchPlatform2" parent="." unique_id=524878013 instance=ExtResource("10_j2mkx")]
+transform = Transform3D(-0.9240754, -0.05448979, -0.044209246, -0.049355548, 0.99662614, -0.017328024, 0.057147663, -0.020361802, -0.7298274, 63.92113, 13.988814, -61.641678)

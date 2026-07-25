@@ -5,7 +5,7 @@
 [ext_resource type="Shader" uid="uid://b4e7wvkqir6or" path="res://shaders/wisp_flame.gdshader" id="3_pcd7t"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u6idi"]
-radius = 0.75
+radius = 2.205856
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfmtj"]
 shading_mode = 0

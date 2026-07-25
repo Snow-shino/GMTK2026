@@ -7,12 +7,7 @@ enum LevelState {
 	FAILED,
 }
 
-@export_category("Level Audio")
-@export var background_music: AudioStream
-@export var ambient_loop: AudioStream
-@export var level_failed_sound: AudioStream
-@export_range(-80.0, 6.0, 0.1) var music_volume_db := -8.0
-@export_range(-80.0, 6.0, 0.1) var ambience_volume_db := -12.0
+@export var level_sequence: LevelSequence = preload("res://Data/level_sequence.tres")
 @export_range(0.0, 10.0, 0.1) var failure_delay := 0.5
 
 var state := LevelState.PLAYING
@@ -27,11 +22,15 @@ var state := LevelState.PLAYING
 
 
 func _ready() -> void:
+	var current_path := _get_current_scene_path()
+	LevelProgress.mark_visited(current_path)
+	_validate_sequence(current_path)
 	hud.bind_player(player)
 	player.life_depleted.connect(_on_life_depleted)
 	goal.level_completed.connect(_on_level_completed)
-	_start_loop(music_player, background_music, music_volume_db)
-	_start_loop(ambience_player, ambient_loop, ambience_volume_db)
+	if level_sequence != null:
+		_start_loop(music_player, level_sequence.base_music, level_sequence.music_volume_db)
+		_start_loop(ambience_player, level_sequence.ambient_loop, level_sequence.ambience_volume_db)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -45,22 +44,28 @@ func _on_level_completed(completed_goal: LevelGoal) -> void:
 	await get_tree().create_timer(completed_goal.completion_delay).timeout
 	if state != LevelState.COMPLETED:
 		return
+	var next_level: PackedScene
+	var main_menu: PackedScene
+	if level_sequence != null:
+		var current_path := _get_current_scene_path()
+		next_level = level_sequence.get_next_level(current_path)
+		main_menu = level_sequence.main_menu
+		_play_state_sound(level_sequence.victory_sound)
 	result_screen.show_completion(
 		player.get_current_life(),
-		completed_goal.next_level_path,
-		completed_goal.main_menu_path
+		next_level,
+		main_menu
 	)
 
 
 func _on_life_depleted() -> void:
 	if not _leave_playing(LevelState.FAILED):
 		return
-	if level_failed_sound != null:
-		state_audio.stream = level_failed_sound
-		state_audio.play()
+	if level_sequence != null:
+		_play_state_sound(level_sequence.failure_sound)
 	await get_tree().create_timer(failure_delay).timeout
 	if state == LevelState.FAILED:
-		result_screen.show_failure(goal.main_menu_path)
+		result_screen.show_failure(level_sequence.main_menu if level_sequence != null else null)
 
 
 func _leave_playing(next_state: LevelState) -> bool:
@@ -81,3 +86,24 @@ func _start_loop(player_node: AudioStreamPlayer, stream: AudioStream, volume_db:
 	if not player_node.finished.is_connected(player_node.play):
 		player_node.finished.connect(player_node.play)
 	player_node.play()
+
+
+func _play_state_sound(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	state_audio.stream = stream
+	state_audio.play()
+
+
+func _validate_sequence(current_path: String) -> void:
+	if level_sequence == null:
+		push_warning("LevelFlow has no LevelSequence resource assigned.")
+		return
+	if level_sequence.get_level_index(current_path) < 0:
+		push_warning("Current scene is not in LevelSequence: %s" % current_path)
+
+
+func _get_current_scene_path() -> String:
+	if get_tree().current_scene != null:
+		return get_tree().current_scene.scene_file_path
+	return scene_file_path

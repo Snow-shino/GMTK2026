@@ -119,6 +119,11 @@ radius = 0.2
 [node name="Player" type="CharacterBody3D" unique_id=1835401173]
 unique_name_in_owner = true
 script = ExtResource("1_player")
+ground_acceleration = 200.0
+ground_deceleration = 100.0
+turn_acceleration = 120.0
+air_acceleration = 100.0
+air_deceleration = 66.9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=811361362]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
