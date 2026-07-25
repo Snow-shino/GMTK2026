@@ -1,18 +1,168 @@
 [gd_scene format=3 uid="uid://bhb6wmbfr3n3o"]
 
 [ext_resource type="Script" uid="uid://b8je4ohjf8jt7" path="res://scripts/dash_collectible.gd" id="1_dash"]
+[ext_resource type="Script" uid="uid://b6yvbtq7oamtw" path="res://scripts/collectible_visuals.gd" id="3_e2a6j"]
+[ext_resource type="Shader" uid="uid://b4e7wvkqir6or" path="res://shaders/wisp_flame.gdshader" id="3_pcd7t"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u6idi"]
 radius = 2.205856
 
-[sub_resource type="StandardMaterial3D" id="Material_collectible"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfmtj"]
 shading_mode = 0
-albedo_color = Color(0.80784315, 0.6509804, 1, 1)
+albedo_color = Color(1, 0.9098039, 0.9607843, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_wdbi6"]
-material = SubResource("Material_collectible")
-radius = 0.35
-height = 0.7
+[sub_resource type="SphereMesh" id="SphereMesh_3cnp1"]
+material = SubResource("StandardMaterial3D_bfmtj")
+radius = 0.39
+height = 0.82
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grdd7"]
+render_priority = 2
+shader = ExtResource("3_pcd7t")
+shader_parameter/flame_speed_1 = 1.75
+shader_parameter/flame_speed_2 = 2.20000003278264
+shader_parameter/noise_scale_1 = 4.2
+shader_parameter/noise_scale_2 = 6.4
+shader_parameter/cutoff = 0.48
+shader_parameter/softness = 0.13
+shader_parameter/displacement_strength = 0.035
+shader_parameter/taper_strength = 0.76
+shader_parameter/top_stretch = 0.22
+shader_parameter/inner_color = Color(1, 0.54901963, 0.8117647, 1)
+shader_parameter/outer_color = Color(1, 0.23921569, 0.5411765, 1)
+shader_parameter/emission_strength = 4.2
+shader_parameter/opacity = 0.46
+shader_parameter/motion_dir_local = Vector3(0, 0, 0)
+shader_parameter/motion_strength = 0.0
+shader_parameter/drag_strength = 0.26
+shader_parameter/drag_curve = 1.5
+shader_parameter/max_drag_angle_degrees = 40.0
+shader_parameter/side_sway_from_motion = 0.1
+shader_parameter/motion_stretch_y = 0.13
+
+[sub_resource type="SphereMesh" id="SphereMesh_wchwv"]
+radius = 0.56
+height = 1.45
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5a8jp"]
+render_priority = 1
+shader = ExtResource("3_pcd7t")
+shader_parameter/flame_speed_1 = 1.2
+shader_parameter/flame_speed_2 = 0.72
+shader_parameter/noise_scale_1 = 4.8
+shader_parameter/noise_scale_2 = 7.6
+shader_parameter/cutoff = 0.57
+shader_parameter/softness = 0.1
+shader_parameter/displacement_strength = 0.085
+shader_parameter/taper_strength = 0.86
+shader_parameter/top_stretch = 0.34
+shader_parameter/inner_color = Color(1, 0.54901963, 0.8117647, 1)
+shader_parameter/outer_color = Color(1, 0.23921569, 0.5411765, 1)
+shader_parameter/emission_strength = 3.2
+shader_parameter/opacity = 0.3
+shader_parameter/motion_dir_local = Vector3(0, 0, 0)
+shader_parameter/motion_strength = 0.0
+shader_parameter/drag_strength = 0.4
+shader_parameter/drag_curve = 1.35
+shader_parameter/max_drag_angle_degrees = 40.0
+shader_parameter/side_sway_from_motion = 0.12
+shader_parameter/motion_stretch_y = 0.17
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_la4kp"]
+emission_shape = 1
+emission_sphere_radius = 0.28
+direction = Vector3(0, 0.45, 1)
+spread = 32.0
+initial_velocity_min = 0.45
+initial_velocity_max = 0.8
+gravity = Vector3(0, 0.28, 0)
+scale_min = 0.09
+scale_max = 0.16
+
+[sub_resource type="Shader" id="Shader_e2a6j"]
+code = "shader_type spatial;
+render_mode unshaded, blend_add, depth_draw_never, cull_disabled;
+
+uniform vec4 particle_color : source_color = vec4(0.25, 0.78, 1.0, 1.0);
+uniform float emission_strength : hint_range(0.0, 10.0, 0.1) = 3.5;
+
+varying float lifetime_fade;
+
+void vertex() {
+	float lifetime = clamp(INSTANCE_CUSTOM.y, 0.0, 1.0);
+	float shrink = mix(1.0, 0.08, smoothstep(0.2, 1.0, lifetime));
+	VERTEX *= shrink;
+	lifetime_fade = 1.0 - smoothstep(0.62, 1.0, lifetime);
+}
+
+void fragment() {
+	float distance_from_center = length(UV - vec2(0.5));
+	float soft_circle = smoothstep(0.5, 0.08, distance_from_center);
+	float hot_core = smoothstep(0.28, 0.0, distance_from_center);
+	vec3 color = particle_color.rgb * mix(vec3(1.0), vec3(1.35), hot_core * 0.8);
+	ALBEDO = color;
+	EMISSION = color * emission_strength;
+	ALPHA = soft_circle * particle_color.a * lifetime_fade;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcd7t"]
+render_priority = 0
+shader = SubResource("Shader_e2a6j")
+shader_parameter/particle_color = Color(1, 0.54901963, 0.8117647, 0.8)
+shader_parameter/emission_strength = 4.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_kf4sd"]
+material = SubResource("ShaderMaterial_pcd7t")
+orientation = 1
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pwy4l"]
+emission_shape = 1
+emission_sphere_radius = 0.62
+direction = Vector3(0, 1, 0)
+spread = 48.0
+initial_velocity_min = 0.08
+initial_velocity_max = 0.28
+gravity = Vector3(0, 0.08, 0)
+scale_min = 0.025
+scale_max = 0.07
+
+[sub_resource type="Shader" id="Shader_bfmtj"]
+code = "shader_type spatial;
+render_mode unshaded, blend_add, depth_draw_never, cull_disabled;
+
+uniform vec4 particle_color : source_color = vec4(0.25, 0.78, 1.0, 1.0);
+uniform float emission_strength : hint_range(0.0, 10.0, 0.1) = 3.5;
+
+varying float lifetime_fade;
+
+void vertex() {
+	float lifetime = clamp(INSTANCE_CUSTOM.y, 0.0, 1.0);
+	float shrink = mix(1.0, 0.08, smoothstep(0.2, 1.0, lifetime));
+	VERTEX *= shrink;
+	lifetime_fade = 1.0 - smoothstep(0.62, 1.0, lifetime);
+}
+
+void fragment() {
+	float distance_from_center = length(UV - vec2(0.5));
+	float soft_circle = smoothstep(0.5, 0.08, distance_from_center);
+	float hot_core = smoothstep(0.28, 0.0, distance_from_center);
+	vec3 color = particle_color.rgb * mix(vec3(1.0), vec3(1.35), hot_core * 0.8);
+	ALBEDO = color;
+	EMISSION = color * emission_strength;
+	ALPHA = soft_circle * particle_color.a * lifetime_fade;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3cnp1"]
+render_priority = 0
+shader = SubResource("Shader_bfmtj")
+shader_parameter/particle_color = Color(1, 0.54901963, 0.8117647, 0.8)
+shader_parameter/emission_strength = 2.6
+
+[sub_resource type="QuadMesh" id="QuadMesh_grdd7"]
+material = SubResource("ShaderMaterial_3cnp1")
+orientation = 1
 
 [node name="DashCollectible" type="Area3D" unique_id=1621690256]
 script = ExtResource("1_dash")
@@ -20,10 +170,54 @@ script = ExtResource("1_dash")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1231726164]
 shape = SubResource("SphereShape3D_u6idi")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1744237204]
-mesh = SubResource("SphereMesh_wdbi6")
-
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1695113081]
-light_color = Color(0.80784315, 0.6509804, 1, 1)
+light_color = Color(1, 0.6039216, 0.84705883, 1)
 light_energy = 1.5
 omni_range = 3.0
+
+[node name="VisualRoot" type="Node3D" parent="." unique_id=2139575641]
+unique_name_in_owner = true
+script = ExtResource("3_e2a6j")
+scale_pulse_amount = 0.02
+
+[node name="CoreMesh" type="MeshInstance3D" parent="VisualRoot" unique_id=1035266133]
+transform = Transform3D(0.615, 0, 0, 0, 0.615, 0, 0, 0, 0.615, 0, 0, 0)
+mesh = SubResource("SphereMesh_3cnp1")
+
+[node name="InnerFlame" type="MeshInstance3D" parent="VisualRoot" unique_id=847400726]
+unique_name_in_owner = true
+transform = Transform3D(0.82, 0, 0, 0, 0.86, 0, 0, 0, 0.82, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_grdd7")
+mesh = SubResource("SphereMesh_wchwv")
+
+[node name="FlameShell" type="MeshInstance3D" parent="VisualRoot" unique_id=134492594]
+unique_name_in_owner = true
+material_override = SubResource("ShaderMaterial_5a8jp")
+mesh = SubResource("SphereMesh_wchwv")
+
+[node name="EmberTrail" type="GPUParticles3D" parent="VisualRoot" unique_id=1917886582]
+unique_name_in_owner = true
+amount = 48
+amount_ratio = 0.08
+lifetime = 1.6
+randomness = 0.55
+visibility_aabb = AABB(-5, -3, -5, 10, 8, 10)
+process_material = SubResource("ParticleProcessMaterial_la4kp")
+draw_pass_1 = SubResource("QuadMesh_kf4sd")
+
+[node name="AmbientSparks" type="GPUParticles3D" parent="VisualRoot" unique_id=761787589]
+unique_name_in_owner = true
+amount = 12
+amount_ratio = 0.65
+lifetime = 2.6
+randomness = 0.8
+fixed_fps = 24
+visibility_aabb = AABB(-2, -2, -2, 4, 5, 4)
+process_material = SubResource("ParticleProcessMaterial_pwy4l")
+draw_pass_1 = SubResource("QuadMesh_grdd7")
+
+[node name="WispLight" type="OmniLight3D" parent="VisualRoot" unique_id=958773594]
+unique_name_in_owner = true
+light_color = Color(1, 0.6039216, 0.84705883, 1)
+light_energy = 1.45
+omni_range = 4.5
