@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="LevelSequence" format=3 uid="uid://cltyhj0u1tnqb"]
 
 [ext_resource type="PackedScene" uid="uid://em2p0bufs6t5" path="res://scenes/levels/lvl1-1.tscn" id="1_7frm8"]
-[ext_resource type="Script" uid="uid://cp7fbh7t14qnf" path="res://scripts/level_sequence.gd" id="1_sequence"]
+[ext_resource type="Script" path="res://scripts/level_sequence.gd" id="1_sequence"]
 [ext_resource type="PackedScene" uid="uid://4r1m4aghmleh" path="res://scenes/levels/lvl1-2.tscn" id="2_lwcfh"]
 [ext_resource type="PackedScene" uid="uid://c7wun1pbkqaya" path="res://scenes/main_menu.tscn" id="2_menu"]
 [ext_resource type="PackedScene" uid="uid://bou4xwc5n5xph" path="res://scenes/levels/lvl1-3.tscn" id="3_to8eq"]
