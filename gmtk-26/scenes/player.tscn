@@ -10,37 +10,9 @@
 radius = 0.45
 height = 1.8
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
-render_priority = 0
-shader = ExtResource("4_flame")
-shader_parameter/flame_speed_1 = 1.35
-shader_parameter/flame_speed_2 = 0.82
-shader_parameter/noise_scale_1 = 4.6
-shader_parameter/noise_scale_2 = 7.3
-shader_parameter/cutoff = 0.45999998971808
-shader_parameter/softness = 0.11
-shader_parameter/displacement_strength = 0.075
-shader_parameter/taper_strength = 0.82
-shader_parameter/top_stretch = 0.28
-shader_parameter/inner_color = Color(1, 1, 1, 1)
-shader_parameter/outer_color = Color(0.04, 0.42, 1, 1)
-shader_parameter/emission_strength = 3.0
-shader_parameter/opacity = 0.34
-shader_parameter/motion_dir_local = Vector3(0, 0, 0)
-shader_parameter/motion_strength = 0.0
-shader_parameter/drag_strength = 0.18
-shader_parameter/drag_curve = 1.8
-shader_parameter/side_sway_from_motion = 0.08
-shader_parameter/motion_stretch_y = 0.1
-
 [sub_resource type="StandardMaterial3D" id="Material_wisp"]
 shading_mode = 0
 albedo_color = Color(0.82, 0.96, 1, 1)
-metallic = 0.0
-roughness = 0.3
-emission_enabled = true
-emission = Color(0.68, 0.93, 1, 1)
-emission_energy_multiplier = 3.4
 
 [sub_resource type="SphereMesh" id="SphereMesh_wisp"]
 material = SubResource("Material_wisp")
@@ -67,6 +39,7 @@ shader_parameter/motion_dir_local = Vector3(0, 0, 0)
 shader_parameter/motion_strength = 0.0
 shader_parameter/drag_strength = 0.26
 shader_parameter/drag_curve = 1.5
+shader_parameter/max_drag_angle_degrees = 40.0
 shader_parameter/side_sway_from_motion = 0.1
 shader_parameter/motion_stretch_y = 0.13
 
@@ -94,6 +67,7 @@ shader_parameter/motion_dir_local = Vector3(0, 0, 0)
 shader_parameter/motion_strength = 0.0
 shader_parameter/drag_strength = 0.4
 shader_parameter/drag_curve = 1.35
+shader_parameter/max_drag_angle_degrees = 40.0
 shader_parameter/side_sway_from_motion = 0.12
 shader_parameter/motion_stretch_y = 0.17
 
@@ -145,6 +119,11 @@ radius = 0.2
 [node name="Player" type="CharacterBody3D" unique_id=1835401173]
 unique_name_in_owner = true
 script = ExtResource("1_player")
+ground_acceleration = 200.0
+ground_deceleration = 100.0
+turn_acceleration = 120.0
+air_acceleration = 100.0
+air_deceleration = 66.9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=811361362]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -214,11 +193,9 @@ fov = 65.0
 [node name="LifeComponent" type="Node" parent="." unique_id=835234636]
 unique_name_in_owner = true
 script = ExtResource("2_life")
-starting_life = 100.0
-drain_rate = 4.5
 
-[node name="EffectsAudio" type="AudioStreamPlayer3D" parent="."]
+[node name="EffectsAudio" type="AudioStreamPlayer3D" parent="." unique_id=1825294988]
 unique_name_in_owner = true
 
-[node name="WarningAudio" type="AudioStreamPlayer" parent="."]
+[node name="WarningAudio" type="AudioStreamPlayer" parent="." unique_id=1143372736]
 unique_name_in_owner = true

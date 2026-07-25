@@ -1,7 +1,7 @@
 class_name MainMenu
 extends Control
 
-@export_file("*.tscn") var first_level_path := "res://main.tscn"
+@export_file("*.tscn") var first_level_path := "res://scenes/levels/lvl1.tscn"
 @export var menu_music: AudioStream
 @export var button_hover_sound: AudioStream
 @export var button_pressed_sound: AudioStream

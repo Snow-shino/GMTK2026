@@ -6,9 +6,10 @@ signal life_depleted
 
 @export_category("Ground Movement")
 @export_range(0.1, 30.0, 0.1) var max_ground_speed: float = 16.0
-@export_range(0.1, 100.0, 0.1) var ground_acceleration: float = 56.0
+@export_range(0.1, 200.0, 0.1) var ground_acceleration: float = 56.0
 @export_range(0.1, 100.0, 0.1) var ground_deceleration: float = 68.0
-@export_range(0.1, 120.0, 0.1) var turn_acceleration: float = 82.0
+## how fast to turn
+@export_range(0.1, 140.0, 0.1) var turn_acceleration: float = 82.0
 @export_range(0.1, 30.0, 0.1) var rotation_speed: float = 16.0
 @export_range(0.0, 0.9, 0.01) var input_deadzone: float = 0.12
 

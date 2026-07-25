@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dhqal6i5ljm4t"]
+
+[ext_resource type="PackedScene" uid="uid://bahw7lda82hus" path="res://Assets/props/tree1branch.fbx" id="1_vj6ch"]
+[ext_resource type="Texture2D" uid="uid://bfabfo8aue2af" path="res://Assets/props/bark_07_baseColor_1k_2.png" id="2_aem8p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yh6n2"]
+albedo_color = Color(0.32157576, 0.61517906, 0.64172816, 1)
+albedo_texture = ExtResource("2_aem8p")
+
+[node name="BranchPlatform" type="Node3D" unique_id=1577981104]
+
+[node name="tree1branch" parent="." unique_id=878019404 instance=ExtResource("1_vj6ch")]
+
+[node name="tree_001" parent="tree1branch" index="0" unique_id=779553027]
+surface_material_override/0 = SubResource("StandardMaterial3D_yh6n2")
+
+[editable path="tree1branch"]
