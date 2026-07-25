@@ -4,8 +4,6 @@ extends Area3D
 signal level_completed(goal: LevelGoal)
 signal goal_feedback_requested
 
-@export_file("*.tscn") var next_level_path: String
-@export_file("*.tscn") var main_menu_path: String
 @export_range(0.0, 10.0, 0.1) var completion_delay: float = 0.75
 @export var goal_enabled := true
 @export var goal_reached_sound: AudioStream

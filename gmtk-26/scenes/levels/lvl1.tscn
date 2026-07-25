@@ -42,7 +42,6 @@ size = Vector3(5087.3745, 0.5, 1063.8604)
 
 [node name="TestLevel" type="Node3D" unique_id=1751151151]
 script = ExtResource("1_20eu8")
-next_level_path = "uid://4r1m4aghmleh"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
 environment = SubResource("Environment_forest")
@@ -96,7 +95,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.680
 
 [node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("10_7q41e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.806398, -0.4539857, -40.413376)
-next_level_path = "uid://dfr1urlnbqo83"
 
 [node name="AreaLight3D" type="AreaLight3D" parent="LevelGoal" unique_id=1377440733]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08631706, 3.537665, 3.2331886)

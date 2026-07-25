@@ -72,7 +72,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.680
 
 [node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("9_bhrca")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2431965, 4.712537, -56.976807)
-next_level_path = "uid://dfr1urlnbqo83"
 
 [node name="Tree" parent="." unique_id=1107119201 instance=ExtResource("10_fdawt")]
 transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -71.57733, -55.114784, 3.4605255)
