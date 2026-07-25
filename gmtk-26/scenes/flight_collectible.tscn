@@ -1,15 +1,19 @@
 [gd_scene format=3 uid="uid://cxesm1tn7lsle"]
 
+[ext_resource type="Script" uid="uid://dne2becv5edoh" path="res://scripts/flight_collectible.gd" id="1_ohfg5"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_56dul"]
-radius = 0.75
+radius = 2.2538502
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xbtt"]
-albedo_color = Color(0.31764707, 0.1254902, 0.85882354, 1)
+albedo_color = Color(0.43896985, 0.36903805, 0.9833136, 1)
+roughness = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_boxmp"]
 material = SubResource("StandardMaterial3D_0xbtt")
 
 [node name="Area3D" type="Area3D" unique_id=1262300711]
+script = ExtResource("1_ohfg5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1005863412]
 shape = SubResource("SphereShape3D_56dul")
@@ -19,5 +23,5 @@ mesh = SubResource("SphereMesh_boxmp")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1325836282]
 light_color = Color(0.31764707, 0.1254902, 0.85882354, 1)
-light_energy = 1.5
+light_energy = 8.865
 omni_range = 3.0

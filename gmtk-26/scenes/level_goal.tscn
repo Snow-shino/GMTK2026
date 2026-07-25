@@ -1,18 +1,29 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://br4xs4vadfjdy"]
 
-[ext_resource type="Script" path="res://scripts/level_goal.gd" id="1_goal"]
+[ext_resource type="Script" uid="uid://bjedwbn4ttiqy" path="res://scripts/level_goal.gd" id="1_goal"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="2_dpp3b"]
+[ext_resource type="Texture2D" uid="uid://caenogb41d5ce" path="res://Assets/props/plaster_wall_01_basecolor_1k.png" id="3_km17l"]
+[ext_resource type="Texture2D" uid="uid://bx8u0ponf03qt" path="res://Assets/props/fs_stylized_brushwork_06.png" id="4_pgd75"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape_goal"]
 height = 4.0
 radius = 1.5
 
-[sub_resource type="StandardMaterial3D" id="Material_goal"]
-shading_mode = 0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pgd75"]
+albedo_color = Color(0.46847552, 0.17003512, 0.009372742, 1)
+albedo_texture = ExtResource("3_km17l")
+uv1_scale = Vector3(1.5, 1.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iek63"]
 transparency = 1
-albedo_color = Color(0.18, 0.75, 1, 0.55)
-emission_enabled = true
-emission = Color(0.1, 0.65, 1, 1)
-emission_energy_multiplier = 4.0
+albedo_color = Color(0.74992514, 0.42181408, 0.14320794, 1)
+albedo_texture = ExtResource("4_pgd75")
+uv1_scale = Vector3(1.63, 1.63, 1.63)
+
+[sub_resource type="StandardMaterial3D" id="Material_goal"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.9647059, 0.59607846, 0.11372549, 0.24313726)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_goal"]
 material = SubResource("Material_goal")
@@ -21,17 +32,34 @@ bottom_radius = 1.35
 height = 4.0
 radial_segments = 24
 
-[node name="LevelGoal" type="Area3D"]
+[node name="LevelGoal" type="Area3D" unique_id=24458834]
 unique_name_in_owner = true
 collision_layer = 0
-collision_mask = 1
 script = ExtResource("1_goal")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1990302572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8217583, 2.1431065, 1.9216886)
 shape = SubResource("CylinderShape_goal")
 
-[node name="GoalMesh" type="MeshInstance3D" parent="."]
+[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("2_dpp3b")]
+transform = Transform3D(2.1037886, 0, -0.7243603, 0, 2.225, 0, 0.7243603, 0, 2.1037886, 0, 0, 0)
+
+[node name="Cylinder" parent="lantern" index="0" unique_id=1735434930]
+surface_material_override/0 = SubResource("StandardMaterial3D_pgd75")
+surface_material_override/1 = SubResource("StandardMaterial3D_iek63")
+
+[node name="GoalMesh" type="MeshInstance3D" parent="." unique_id=535526130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.19829154, 2.1431065, 1.0732603)
 mesh = SubResource("CylinderMesh_goal")
 
-[node name="GoalAudio" type="AudioStreamPlayer3D" parent="."]
+[node name="SpotLight3D" type="SpotLight3D" parent="GoalMesh" unique_id=2030223439]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 2.5378633, 0)
+light_color = Color(0.9741711, 0.4436128, 0, 1)
+light_energy = 14.0
+light_indirect_energy = 5.346
+light_size = 0.593
+
+[node name="GoalAudio" type="AudioStreamPlayer3D" parent="." unique_id=991291079]
 unique_name_in_owner = true
+
+[editable path="lantern"]

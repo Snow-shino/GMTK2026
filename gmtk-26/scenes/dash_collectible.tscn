@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bhb6wmbfr3n3o"]
 
-[ext_resource type="Script" path="res://scripts/dash_collectible.gd" id="1_dash"]
+[ext_resource type="Script" uid="uid://b8je4ohjf8jt7" path="res://scripts/dash_collectible.gd" id="1_dash"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u6idi"]
-radius = 0.75
+radius = 2.205856
 
 [sub_resource type="StandardMaterial3D" id="Material_collectible"]
 shading_mode = 0

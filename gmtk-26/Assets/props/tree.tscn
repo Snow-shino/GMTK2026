@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://ceiav7efrxarc"]
+
+[ext_resource type="PackedScene" uid="uid://fgtgaoy0ekij" path="res://Assets/props/tree1.fbx" id="1_resn6"]
+[ext_resource type="Texture2D" uid="uid://bfabfo8aue2af" path="res://Assets/props/bark_07_baseColor_1k_2.png" id="2_oqfeu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8reh"]
+albedo_color = Color(0.32156864, 0.6156863, 0.6431373, 1)
+albedo_texture = ExtResource("2_oqfeu")
+uv1_scale = Vector3(1.99, 1.99, 1.99)
+
+[node name="Tree" type="Node3D" unique_id=1107119201]
+
+[node name="tree1" parent="." unique_id=2111707783 instance=ExtResource("1_resn6")]
+
+[node name="tree" parent="tree1" index="0" unique_id=1281138804]
+surface_material_override/0 = SubResource("StandardMaterial3D_f8reh")
+
+[editable path="tree1"]
