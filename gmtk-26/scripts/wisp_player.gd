@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 signal life_changed(current_life: float, max_life: float)
 signal life_depleted
+signal respawned
 
 @export_category("Ground Movement")
 @export_range(0.1, 30.0, 0.1) var max_ground_speed: float = 16.0
@@ -67,6 +68,7 @@ var _was_grounded := false
 @onready var warning_audio: AudioStreamPlayer = %WarningAudio
 
 var _camera_follow_offset := Vector3.ZERO
+var _respawn_transform: Transform3D
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -76,6 +78,7 @@ func _ready() -> void:
 
 	# Keep camera-relative input independent from gameplay-facing rotation.
 	_camera_follow_offset = camera_pivot.global_position - global_position
+	_respawn_transform = global_transform
 	var camera_transform := camera_pivot.global_transform
 	camera_pivot.top_level = true
 	camera_pivot.global_transform = camera_transform
@@ -84,6 +87,25 @@ func _ready() -> void:
 	life.life_depleted.connect(_on_life_depleted)
 	life.life_changed.emit(life.current_life, life.max_life)
 	_was_grounded = is_on_floor()
+
+
+## Changes the transform used by respawn(). Checkpoints can call this later.
+func set_respawn_transform(new_transform: Transform3D) -> void:
+	_respawn_transform = new_transform
+
+
+## Returns the player to the latest respawn transform and clears transient motion.
+func respawn() -> void:
+	is_dashing = false
+	dash_velocity = Vector3.ZERO
+	_dash_time_left = 0.0
+	is_flying = false
+	velocity = Vector3.ZERO
+	global_transform = _respawn_transform
+	reset_physics_interpolation()
+	_was_grounded = false
+	camera_pivot.global_position = global_position + _camera_follow_offset
+	respawned.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:

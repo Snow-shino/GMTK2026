@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://b666c0qa18ifo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ukwsm"]
+size = Vector3(203.67578, 105.56299, 23.509155)
+
+[node name="Invisiblewall" type="StaticBody3D" unique_id=827719754]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=222959000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.291748, 58.741325, 11.254578)
+shape = SubResource("BoxShape3D_ukwsm")
+debug_color = Color(0.9336793, 0.25888538, 0, 0.41960785)

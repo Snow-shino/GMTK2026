@@ -7,7 +7,7 @@ enum LevelState {
 	FAILED,
 }
 
-@export var level_sequence: LevelSequence = preload("res://Data/level_sequence.tres")
+@export var level_sequence: LevelSequence
 @export_range(0.0, 10.0, 0.1) var failure_delay := 0.5
 
 var state := LevelState.PLAYING
@@ -22,6 +22,8 @@ var state := LevelState.PLAYING
 
 
 func _ready() -> void:
+	if level_sequence == null:
+		level_sequence = load("res://Data/level_sequence.tres") as LevelSequence
 	var current_path := _get_current_scene_path()
 	LevelProgress.mark_visited(current_path)
 	_validate_sequence(current_path)

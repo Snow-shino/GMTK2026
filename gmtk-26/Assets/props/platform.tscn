@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bhgumkoverpdh"]
+
+[ext_resource type="PackedScene" uid="uid://wutc22rakj6a" path="res://Assets/props/branch-Platform.fbx" id="1_noksy"]
+
+[node name="Platform" type="Node3D" unique_id=1406972493]
+
+[node name="branch-Platform" parent="." unique_id=1669770730 instance=ExtResource("1_noksy")]
+
+[editable path="branch-Platform"]

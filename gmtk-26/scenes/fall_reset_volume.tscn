@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/fall_reset_volume.gd" id="1_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape_killbox"]
+size = Vector3(500, 20, 500)
+
+[node name="FallResetVolume" type="Area3D"]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_killbox")
