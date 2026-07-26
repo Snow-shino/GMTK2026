@@ -149,10 +149,6 @@ restore_amount = 50.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.73056, 91.1535, -79.063255)
 restore_amount = 50.0
 
-[node name="FlightCollectible6" parent="." unique_id=820509458 instance=ExtResource("12_k3xur")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.04174, 61.554058, -103.54859)
-restore_amount = 150.0
-
 [node name="BranchPlatform3" parent="." unique_id=546879073 instance=ExtResource("9_p3opf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.80795, 57.85718, -110.09331)
 
@@ -176,3 +172,6 @@ restore_amount = 50.0
 
 [node name="DashCollectible5" parent="." unique_id=1898208424 instance=ExtResource("12_gvdya")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.33632, 58.14087, -122.39904)
+
+[node name="LifeCollectible2" parent="." unique_id=685798452 instance=ExtResource("3_s17hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.84167, 61.30226, -103.69227)
