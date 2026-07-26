@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="9_2nrxc"]
 [ext_resource type="PackedScene" uid="uid://bhgumkoverpdh" path="res://Assets/props/platform.tscn" id="10_fck74"]
 [ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="10_haxpt"]
-[ext_resource type="PackedScene" uid="uid://dh32ro43uocf0" path="res://scenes/fall_reset_volume.tscn" id="11_ct5y8"]
+[ext_resource type="PackedScene" path="res://scenes/fall_reset_volume.tscn" id="11_ct5y8"]
 [ext_resource type="PackedScene" uid="uid://4byqqubxl02e" path="res://scenes/start_point.tscn" id="12_ct5y8"]
 
 [sub_resource type="Environment" id="Environment_forest"]

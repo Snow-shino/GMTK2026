@@ -202,6 +202,7 @@ func _handle_jump_and_gravity(delta: float, grounded: bool) -> void:
 		_play_world_sound(jump_sound)
 	elif Input.is_action_just_pressed("jump") and has_flight_powerup:
 		is_flying = true
+		
 
 	if Input.is_action_just_released("jump") and velocity.y > 0.0:
 		velocity.y *= jump_cut_multiplier
