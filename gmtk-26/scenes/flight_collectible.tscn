@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cxesm1tn7lsle"]
 
+[ext_resource type="Script" uid="uid://dne2becv5edoh" path="res://scripts/flight_collectible.gd" id="1_0xbtt"]
 [ext_resource type="Script" uid="uid://b6yvbtq7oamtw" path="res://scripts/collectible_visuals.gd" id="1_boxmp"]
 [ext_resource type="Shader" uid="uid://b4e7wvkqir6or" path="res://shaders/wisp_flame.gdshader" id="2_0xbtt"]
 
@@ -163,7 +164,8 @@ shader_parameter/emission_strength = 2.6
 material = SubResource("ShaderMaterial_lyc4d")
 orientation = 1
 
-[node name="Area3D" type="Area3D" unique_id=1262300711]
+[node name="FlightCollectible" type="Area3D" unique_id=1262300711]
+script = ExtResource("1_0xbtt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1005863412]
 shape = SubResource("SphereShape3D_56dul")

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cxesm1tn7lsle" path="res://scenes/flight_collectible.tscn" id="5_6psxf"]
 [ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="6_dn47d"]
 [ext_resource type="PackedScene" uid="uid://bhgumkoverpdh" path="res://Assets/props/platform.tscn" id="6_q0354"]
-[ext_resource type="PackedScene" uid="uid://dh32ro43uocf0" path="res://scenes/fall_reset_volume.tscn" id="7_n8777"]
+[ext_resource type="PackedScene" path="res://scenes/fall_reset_volume.tscn" id="7_n8777"]
 [ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="9_bhrca"]
 [ext_resource type="PackedScene" uid="uid://4byqqubxl02e" path="res://scenes/start_point.tscn" id="9_hxv46"]
 [ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="10_fdawt"]
@@ -119,5 +119,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.0
 [node name="StartPoint" parent="." unique_id=647104682 instance=ExtResource("9_hxv46")]
 transform = Transform3D(-0.81604475, 0, 0.57798874, 0, 1, 0, -0.57798874, 0, -0.81604475, -0.14021921, 1.1192849, 7.654107)
 
-[node name="Area3D" parent="." unique_id=1262300711 instance=ExtResource("5_6psxf")]
+[node name="FlightCollectible" parent="." unique_id=1262300711 instance=ExtResource("5_6psxf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0308456, 3.566559, 3.870403)
