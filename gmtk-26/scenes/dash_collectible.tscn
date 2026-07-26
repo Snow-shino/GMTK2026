@@ -523,6 +523,7 @@ orientation = 1
 
 [node name="DashCollectible" type="Area3D" unique_id=1621690256]
 script = ExtResource("1_dash")
+restore_amount = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1231726164]
 shape = SubResource("SphereShape3D_u6idi")

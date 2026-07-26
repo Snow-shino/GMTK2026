@@ -140,4 +140,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60507584, 9.121555, -35.843
 transform = Transform3D(-0.81604475, 0, 0.57798874, 0, 1, 0, -0.57798874, 0, -0.81604475, -0.14021921, 1.1192849, 7.654107)
 
 [node name="DashCollectible3" parent="." unique_id=1591632581 instance=ExtResource("12_nyrh8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.649, 8.975347, -84.411575)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.598176, 8.975347, -78.363205)

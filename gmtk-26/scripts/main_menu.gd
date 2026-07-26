@@ -1,7 +1,7 @@
 class_name MainMenu
 extends Control
 
-@export var level_sequence: LevelSequence
+@export var level_sequence: Resource
 @export var menu_music: AudioStream
 @export var button_hover_sound: AudioStream
 @export var button_pressed_sound: AudioStream
@@ -20,7 +20,7 @@ var _loading := false
 
 func _ready() -> void:
 	if level_sequence == null:
-		level_sequence = load("res://Data/level_sequence.tres") as LevelSequence
+		level_sequence = load("res://Data/level_sequence.tres")
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	play_button.pressed.connect(_play_game)
 	level_select_button.pressed.connect(_open_level_select)
@@ -30,7 +30,7 @@ func _ready() -> void:
 	level_select_button.mouse_entered.connect(_play_hover)
 	settings_button.mouse_entered.connect(_play_hover)
 	quit_button.mouse_entered.connect(_play_hover)
-	var has_levels := level_sequence != null and not level_sequence.levels.is_empty()
+	var has_levels: bool = level_sequence != null and not level_sequence.levels.is_empty()
 	play_button.disabled = not has_levels
 	level_select_button.disabled = not has_levels
 	play_button.grab_focus()
@@ -46,7 +46,7 @@ func _play_game() -> void:
 	if level_sequence == null or level_sequence.levels.is_empty():
 		push_warning("Cannot start game: LevelSequence has no levels configured.")
 		return
-	var first_level := level_sequence.levels[0]
+	var first_level: PackedScene = level_sequence.levels[0]
 	if first_level == null:
 		push_warning("Cannot start game: the first LevelSequence entry is empty.")
 		return
