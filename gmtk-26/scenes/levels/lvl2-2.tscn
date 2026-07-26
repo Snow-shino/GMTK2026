@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://cw703lnlr1kqm"]
+
+[ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_dnt86"]
+[ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="2_k3xur"]
+[ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="3_s17hl"]
+[ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="4_4145f"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="5_ao4c1"]
+[ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="6_qcfqt"]
+[ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="7_vbjvh"]
+[ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="8_wm05e"]
+[ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="9_p3opf"]
+[ext_resource type="PackedScene" uid="uid://bhgumkoverpdh" path="res://Assets/props/platform.tscn" id="10_j1im4"]
+[ext_resource type="PackedScene" path="res://scenes/fall_reset_volume.tscn" id="11_0muo1"]
+[ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="12_gvdya"]
+[ext_resource type="PackedScene" uid="uid://cxesm1tn7lsle" path="res://scenes/flight_collectible.tscn" id="12_k3xur"]
+
+[sub_resource type="Environment" id="Environment_forest"]
+background_mode = 1
+background_color = Color(0.008, 0.012, 0.025, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.08, 0.12, 0.2, 1)
+ambient_light_energy = 0.35
+fog_enabled = true
+fog_light_color = Color(0.025, 0.045, 0.08, 1)
+fog_light_energy = 0.3
+fog_density = 0.056
+
+[node name="TestLevel2" type="Node3D" unique_id=1751151151]
+script = ExtResource("1_dnt86")
+completion_delay = 0.3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
+environment = SubResource("Environment_forest")
+
+[node name="MoonLight" type="DirectionalLight3D" parent="." unique_id=859006161]
+transform = Transform3D(0.8253356, 0.44229966, -0.3509874, 0, 0.62161, 0.7833269, 0.5646425, -0.6465076, 0.51303685, 0, 0, 0)
+light_color = Color(0.35, 0.48, 0.75, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
+
+[node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("3_s17hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7107067, 9.938648, -11.6654005)
+restore_amount = 10.0
+
+[node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("4_4145f")]
+
+[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("5_ao4c1")]
+transform = Transform3D(1.6105909, 1.9805044, 0.33797148, 0.39377618, 0.11359278, -2.5421767, -1.9701682, 1.6417444, -0.23181507, -4.7268867, 0.86172867, 10.412244)
+
+[node name="tree" parent="." unique_id=614217166 instance=ExtResource("6_qcfqt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.6802692)
+
+[node name="Tree" parent="." unique_id=1107119201 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -71.57733, -55.114784, 3.4605255)
+
+[node name="Tree2" parent="." unique_id=1550910758 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, 69.32435, -55.114784, -58.79595)
+
+[node name="Tree3" parent="." unique_id=1498542618 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, 43.195293, -55.11808, 2.2380967)
+
+[node name="Tree4" parent="." unique_id=1238491437 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.6015816, 0, 0, 0, 1, -31.285252, -55.059013, 2.444336)
+
+[node name="Tree10" parent="." unique_id=37561425 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.6015816, 0, 0, 0, 1, -35.90885, -55.05901, -98.91205)
+
+[node name="Tree12" parent="." unique_id=251901180 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.6015816, 0, 0, 0, 1, -51.606667, -55.059013, -89.108826)
+
+[node name="Tree14" parent="." unique_id=1251515159 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.6015816, 0, 0, 0, 1, -6.600357, -55.059013, -117.821976)
+
+[node name="Tree15" parent="." unique_id=2107655019 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.6015816, 0, 0, 0, 1, -76.66233, -55.05901, -83.56033)
+
+[node name="Tree16" parent="." unique_id=1629209815 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.6015816, 0, 0, 0, 1, -41.2022, -55.05893, -22.17511)
+
+[node name="Tree5" parent="." unique_id=1549252688 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -91.59522, -55.114784, -111.74538)
+
+[node name="Tree8" parent="." unique_id=395962481 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -115.0716, -55.114784, -118.55775)
+
+[node name="Tree9" parent="." unique_id=842917873 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -96.88858, -55.114697, -35.00846)
+
+[node name="Tree11" parent="." unique_id=901502237 instance=ExtResource("8_wm05e")]
+transform = Transform3D(1.795, 0, 0, 0, 5.143178, 0, 0, 0, 1.795, -23.023722, -55.114784, -77.3703)
+
+[node name="BranchPlatform" parent="." unique_id=1577981104 instance=ExtResource("9_p3opf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.663378, 10.566439, -61.83157)
+
+[node name="BranchPlatform2" parent="." unique_id=524878013 instance=ExtResource("9_p3opf")]
+transform = Transform3D(-0.9240754, -0.05448979, -0.044209246, -0.049355548, 0.99662614, -0.017328024, 0.057147663, -0.020361802, -0.7298274, 63.92113, 13.988814, -61.641678)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=944750866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 0.15753174, -19.390808, 27.112614)
+use_collision = true
+size = Vector3(184.81042, 149.4989, 7.4192505)
+
+[node name="Platform" parent="." unique_id=1406972493 instance=ExtResource("10_j1im4")]
+transform = Transform3D(2.01, 0, 0, 0, 2.01, 0, 0, 0, 2.01, -0.16567421, -3.6296525, 6.790696)
+
+[node name="Platform2" parent="." unique_id=961423169 instance=ExtResource("10_j1im4")]
+transform = Transform3D(2.01, 0, 0, 0, 2.01, 0, 0, 0, 2.01, -9.646505, 23.446224, -94.87524)
+
+[node name="Platform3" parent="." unique_id=2078203844 instance=ExtResource("10_j1im4")]
+transform = Transform3D(0.78036547, 0, 2.8604636, 0, 2.9649997, 0, -2.8604636, 0, 0.78036547, 13.074259, -3.7487035, -61.99378)
+
+[node name="FallResetVolume" parent="." unique_id=252899995 instance=ExtResource("11_0muo1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.04953)
+
+[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("12_gvdya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60507584, 9.231802, -17.763542)
+
+[node name="DashCollectible2" parent="." unique_id=80288510 instance=ExtResource("12_gvdya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60507584, 9.121555, -35.843727)
+
+[node name="FlightCollectible" parent="." unique_id=1262300711 instance=ExtResource("12_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.512991, 3.5925694, -57.530704)
+restore_amount = 150.0
+
+[node name="FlightCollectible2" parent="." unique_id=1265624394 instance=ExtResource("12_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.487284, 15.485767, -54.684875)
+restore_amount = 60.0
+
+[node name="FlightCollectible3" parent="." unique_id=1348947907 instance=ExtResource("12_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.124561, 28.35866, -95.02742)
+restore_amount = 150.0
+
+[node name="FlightCollectible4" parent="." unique_id=801150878 instance=ExtResource("12_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.81815, 34.777634, -100.11733)
+restore_amount = 150.0
+
+[node name="FlightCollectible5" parent="." unique_id=858743032 instance=ExtResource("12_gvdya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.065216, 91.295906, -92.65465)
+restore_amount = 50.0
+
+[node name="LifeCollectible" parent="." unique_id=17611799 instance=ExtResource("3_s17hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.373123, 91.511345, -79.700935)
+restore_amount = 50.0
+
+[node name="DashCollectible3" parent="." unique_id=1802069528 instance=ExtResource("12_gvdya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58.73056, 91.1535, -79.063255)
+restore_amount = 50.0
+
+[node name="BranchPlatform3" parent="." unique_id=546879073 instance=ExtResource("9_p3opf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.80795, 57.85718, -110.09331)
+
+[node name="Platform4" parent="." unique_id=2103989716 instance=ExtResource("10_j1im4")]
+transform = Transform3D(-0.105952024, 0, -0.99437124, 0, 1, 0, 0.99437124, 0, -0.105952024, -102.57812, 48.172173, -115.54287)
+
+[node name="LevelGoal" parent="." unique_id=24458834 instance=ExtResource("7_vbjvh")]
+transform = Transform3D(-0.33010426, 0, 0.94394445, 0, 1, 0, -0.94394445, 0, -0.33010426, -103.1244, 50.09444, -115.65191)
+
+[node name="DashCollectible4" parent="." unique_id=840594870 instance=ExtResource("12_gvdya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56122684, 25.301868, -72.8113)
+restore_amount = 40.0
+
+[node name="FlightCollectible7" parent="." unique_id=1137437418 instance=ExtResource("12_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.593655, 53.663788, -101.24883)
+restore_amount = 100.0
+
+[node name="FlightCollectible8" parent="." unique_id=441676633 instance=ExtResource("12_k3xur")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.608847, 74.97844, -94.172905)
+restore_amount = 50.0
+
+[node name="DashCollectible5" parent="." unique_id=1898208424 instance=ExtResource("12_gvdya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.33632, 58.14087, -122.39904)
+
+[node name="LifeCollectible2" parent="." unique_id=685798452 instance=ExtResource("3_s17hl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.84167, 61.30226, -103.69227)

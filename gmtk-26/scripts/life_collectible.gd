@@ -6,17 +6,27 @@ signal collected(collector: Node3D, restore_amount: float)
 @export_range(0.0, 1000.0, 0.1) var restore_amount: float = 20.0
 @export_range(0.1, 60.0, 0.1) var respawn_time: float = 5.0
 @export var collect_sound: AudioStream
+@export_range(0.0, 2.0, 0.01) var hover_height: float = 0.2
+@export_range(0.1, 10.0, 0.1) var hover_speed: float = 2.0
 
 var _collected := false
 var _respawn_timer: Timer
+var _base_y := 0.0
+var _hover_time := 0.0
 
 
 func _ready() -> void:
+	_base_y = position.y
 	body_entered.connect(_on_body_entered)
 	_respawn_timer = Timer.new()
 	_respawn_timer.one_shot = true
 	_respawn_timer.timeout.connect(_respawn)
 	add_child(_respawn_timer)
+
+
+func _process(delta: float) -> void:
+	_hover_time += delta * hover_speed
+	position.y = _base_y + sin(_hover_time) * hover_height
 
 
 func _on_body_entered(body: Node3D) -> void:
