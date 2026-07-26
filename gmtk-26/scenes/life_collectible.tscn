@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b65f10ajw7hjf" path="res://scripts/life_collectible.gd" id="1_collectible"]
 
 [sub_resource type="SphereShape3D" id="SphereShape_collectible"]
-radius = 0.75
+radius = 2.792868
 
 [sub_resource type="StandardMaterial3D" id="Material_collectible"]
 shading_mode = 0
@@ -17,6 +17,7 @@ height = 0.7
 [node name="LifeCollectible" type="Area3D" unique_id=17611799]
 collision_layer = 2
 script = ExtResource("1_collectible")
+restore_amount = 100.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=238719707]
 shape = SubResource("SphereShape_collectible")
