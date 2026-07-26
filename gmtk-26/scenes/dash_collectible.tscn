@@ -2,23 +2,201 @@
 
 [ext_resource type="Script" uid="uid://b8je4ohjf8jt7" path="res://scripts/dash_collectible.gd" id="1_dash"]
 [ext_resource type="Script" uid="uid://b6yvbtq7oamtw" path="res://scripts/collectible_visuals.gd" id="3_e2a6j"]
-[ext_resource type="Shader" uid="uid://b4e7wvkqir6or" path="res://shaders/wisp_flame.gdshader" id="3_pcd7t"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_u6idi"]
 radius = 2.205856
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfmtj"]
 shading_mode = 0
-albedo_color = Color(1, 0.9098039, 0.9607843, 1)
+albedo_color = Color(0.9137255, 1, 0.972549, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_3cnp1"]
 material = SubResource("StandardMaterial3D_bfmtj")
 radius = 0.39
 height = 0.82
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_grdd7"]
+[sub_resource type="Shader" id="Shader_r14ed"]
+code = "shader_type spatial;
+render_mode unshaded, blend_add, depth_draw_never, cull_back;
+
+uniform float flame_speed_1 : hint_range(0.0, 5.0, 0.05) = 1.35;
+uniform float flame_speed_2 : hint_range(0.0, 5.0, 0.05) = 0.82;
+uniform float noise_scale_1 : hint_range(0.5, 12.0, 0.1) = 4.6;
+uniform float noise_scale_2 : hint_range(0.5, 12.0, 0.1) = 7.3;
+uniform float cutoff : hint_range(0.0, 1.0, 0.01) = 0.48;
+uniform float softness : hint_range(0.01, 0.4, 0.01) = 0.22;
+uniform float displacement_strength : hint_range(0.0, 0.3, 0.005) = 0.035;
+uniform float taper_strength : hint_range(0.0, 1.0, 0.01) = 0.82;
+uniform float top_stretch : hint_range(0.0, 0.8, 0.01) = 0.28;
+uniform vec4 inner_color : source_color = vec4(0.82, 0.97, 1.0, 1.0);
+uniform vec4 outer_color : source_color = vec4(0.04, 0.42, 1.0, 1.0);
+uniform float emission_strength : hint_range(0.0, 10.0, 0.05) = 3.0;
+uniform float opacity : hint_range(0.0, 1.0, 0.01) = 0.24;
+
+/* NEW: movement drag */
+uniform vec3 motion_dir_local = vec3(0.0, 0.0, 0.0);
+uniform float motion_strength : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform float drag_strength : hint_range(0.0, 0.6, 0.01) = 0.18;
+uniform float drag_curve : hint_range(0.5, 4.0, 0.05) = 1.8;
+uniform float max_drag_angle_degrees : hint_range(0.0, 90.0, 1.0) = 40.0;
+uniform float side_sway_from_motion : hint_range(0.0, 0.4, 0.01) = 0.08;
+uniform float motion_stretch_y : hint_range(0.0, 0.4, 0.01) = 0.10;
+
+varying vec3 local_position;
+varying float vertex_flow;
+varying float local_height;
+
+float hash31(vec3 p) {
+	return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453);
+}
+
+float noise3d(vec3 p) {
+	vec3 cell = floor(p);
+	vec3 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+
+	float n000 = hash31(cell + vec3(0.0, 0.0, 0.0));
+	float n100 = hash31(cell + vec3(1.0, 0.0, 0.0));
+	float n010 = hash31(cell + vec3(0.0, 1.0, 0.0));
+	float n110 = hash31(cell + vec3(1.0, 1.0, 0.0));
+	float n001 = hash31(cell + vec3(0.0, 0.0, 1.0));
+	float n101 = hash31(cell + vec3(1.0, 0.0, 1.0));
+	float n011 = hash31(cell + vec3(0.0, 1.0, 1.0));
+	float n111 = hash31(cell + vec3(1.0, 1.0, 1.0));
+
+	float x00 = mix(n000, n100, f.x);
+	float x10 = mix(n010, n110, f.x);
+	float x01 = mix(n001, n101, f.x);
+	float x11 = mix(n011, n111, f.x);
+
+	return mix(mix(x00, x10, f.y), mix(x01, x11, f.y), f.z);
+}
+
+vec3 flow_position(vec3 position, float scale, float speed, vec3 offset) {
+	vec3 p = position * vec3(scale, scale * 0.58, scale);
+	p.y -= TIME * speed;
+	return p + offset;
+}
+
+void vertex() {
+	float height = clamp(VERTEX.y / 1.45 + 0.5, 0.0, 1.0);
+
+	/* Base silhouette */
+	float broad_base = mix(0.76, 1.0, smoothstep(0.02, 0.3, height));
+	float top_taper = 1.0 - smoothstep(0.34, 1.0, height) * taper_strength;
+	VERTEX.xz *= max(broad_base * top_taper, 0.08);
+
+	float flow_1 = noise3d(flow_position(VERTEX, noise_scale_1, flame_speed_1, vec3(0.0)));
+	float flow_2 = noise3d(flow_position(VERTEX, noise_scale_2, flame_speed_2, vec3(5.2, 11.7, -3.4)));
+
+	vertex_flow = flow_1 * 0.68 + flow_2 * 0.32;
+
+	float upper_influence = smoothstep(0.12, 0.88, height);
+	float displacement = (vertex_flow - 0.5) * displacement_strength * upper_influence;
+
+	VERTEX += NORMAL * displacement;
+	VERTEX.x += (flow_1 - flow_2) * displacement_strength * upper_influence * 0.55;
+	VERTEX.y += pow(height, 2.4) * top_stretch * (0.72 + flow_1 * 0.28);
+
+	/* NEW: drag the flame opposite movement */
+	vec3 move_dir = motion_dir_local;
+	move_dir.y = 0.0;
+
+	float move_len = length(move_dir);
+	if (move_len > 0.0001) {
+		move_dir = normalize(move_dir);
+
+		float height_from_base = max(VERTEX.y + 0.725, 0.0);
+		float bend_weight = pow(smoothstep(0.12, 1.0, height), drag_curve);
+		float drag_response = clamp(drag_strength / 0.4, 0.0, 1.0);
+		float bend_angle = radians(max_drag_angle_degrees) * motion_strength * bend_weight * drag_response;
+		float horizontal_bend = sin(bend_angle) * height_from_base;
+		float vertical_drop = (1.0 - cos(bend_angle)) * height_from_base;
+
+		/* Curve the upper flame backward while its base stays anchored. */
+		VERTEX -= move_dir * horizontal_bend;
+		VERTEX.y -= vertical_drop;
+
+		/* Add slight sideways lilt for more organic arc */
+		vec3 side_dir = normalize(vec3(-move_dir.z, 0.0, move_dir.x));
+		VERTEX += side_dir * (flow_1 - 0.5) * side_sway_from_motion * bend_weight * motion_strength;
+
+		/* Slight stretch upward while moving */
+		VERTEX.y += motion_stretch_y * bend_weight * motion_strength;
+	}
+
+	local_position = VERTEX;
+	local_height = height;
+}
+
+void fragment() {
+	float flow_1 = noise3d(
+		flow_position(
+			local_position,
+			noise_scale_1,
+			flame_speed_1,
+			vec3(0.0)
+		)
+	);
+
+	float flow_2 = noise3d(
+		flow_position(
+			local_position,
+			noise_scale_2,
+			flame_speed_2,
+			vec3(5.2, 11.7, -3.4)
+		)
+	);
+
+	float flame_noise = mix(flow_1, flow_2, 0.42);
+	flame_noise += flow_1 * flow_2 * 0.2;
+	flame_noise += (local_height - 0.5) * 0.06;
+
+	float tongues = smoothstep(
+		cutoff - softness,
+		cutoff + softness,
+		flame_noise
+	);
+
+	float bottom_fade = smoothstep(0.02, 0.26, local_height);
+	float tip_fade = 1.0 - smoothstep(0.82, 1.0, local_height);
+	float vertical_mask = bottom_fade * tip_fade;
+
+	float facing = abs(dot(normalize(NORMAL), normalize(VIEW)));
+	float soft_edge = smoothstep(0.02, 0.58, facing);
+
+	float edge_breakup = smoothstep(
+		0.2,
+		0.85,
+		flow_2 + flow_1 * 0.25
+	);
+
+	float flame_mask =
+		tongues *
+		vertical_mask *
+		soft_edge *
+		mix(0.65, 1.0, edge_breakup);
+
+	vec3 color = mix(
+		inner_color.rgb,
+		outer_color.rgb,
+		clamp(flow_2 * 0.5 + local_height * 0.32, 0.0, 1.0)
+	);
+
+	ALBEDO = color;
+
+	EMISSION =
+		color *
+		emission_strength *
+		(0.75 + flame_noise * 0.45);
+
+	ALPHA = opacity * pow(flame_mask, 1.25);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2a6j"]
 render_priority = 2
-shader = ExtResource("3_pcd7t")
+shader = SubResource("Shader_r14ed")
 shader_parameter/flame_speed_1 = 1.75
 shader_parameter/flame_speed_2 = 2.20000003278264
 shader_parameter/noise_scale_1 = 4.2
@@ -28,8 +206,8 @@ shader_parameter/softness = 0.13
 shader_parameter/displacement_strength = 0.035
 shader_parameter/taper_strength = 0.76
 shader_parameter/top_stretch = 0.22
-shader_parameter/inner_color = Color(1, 0.54901963, 0.8117647, 1)
-shader_parameter/outer_color = Color(1, 0.23921569, 0.5411765, 1)
+shader_parameter/inner_color = Color(0.3019608, 1, 0.8235294, 1)
+shader_parameter/outer_color = Color(0, 0.72156864, 0.5803922, 1)
 shader_parameter/emission_strength = 4.2
 shader_parameter/opacity = 0.46
 shader_parameter/motion_dir_local = Vector3(0, 0, 0)
@@ -44,9 +222,188 @@ shader_parameter/motion_stretch_y = 0.13
 radius = 0.56
 height = 1.45
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5a8jp"]
+[sub_resource type="Shader" id="Shader_pcd7t"]
+code = "shader_type spatial;
+render_mode unshaded, blend_add, depth_draw_never, cull_back;
+
+uniform float flame_speed_1 : hint_range(0.0, 5.0, 0.05) = 1.35;
+uniform float flame_speed_2 : hint_range(0.0, 5.0, 0.05) = 0.82;
+uniform float noise_scale_1 : hint_range(0.5, 12.0, 0.1) = 4.6;
+uniform float noise_scale_2 : hint_range(0.5, 12.0, 0.1) = 7.3;
+uniform float cutoff : hint_range(0.0, 1.0, 0.01) = 0.48;
+uniform float softness : hint_range(0.01, 0.4, 0.01) = 0.22;
+uniform float displacement_strength : hint_range(0.0, 0.3, 0.005) = 0.035;
+uniform float taper_strength : hint_range(0.0, 1.0, 0.01) = 0.82;
+uniform float top_stretch : hint_range(0.0, 0.8, 0.01) = 0.28;
+uniform vec4 inner_color : source_color = vec4(0.82, 0.97, 1.0, 1.0);
+uniform vec4 outer_color : source_color = vec4(0.04, 0.42, 1.0, 1.0);
+uniform float emission_strength : hint_range(0.0, 10.0, 0.05) = 3.0;
+uniform float opacity : hint_range(0.0, 1.0, 0.01) = 0.24;
+
+/* NEW: movement drag */
+uniform vec3 motion_dir_local = vec3(0.0, 0.0, 0.0);
+uniform float motion_strength : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform float drag_strength : hint_range(0.0, 0.6, 0.01) = 0.18;
+uniform float drag_curve : hint_range(0.5, 4.0, 0.05) = 1.8;
+uniform float max_drag_angle_degrees : hint_range(0.0, 90.0, 1.0) = 40.0;
+uniform float side_sway_from_motion : hint_range(0.0, 0.4, 0.01) = 0.08;
+uniform float motion_stretch_y : hint_range(0.0, 0.4, 0.01) = 0.10;
+
+varying vec3 local_position;
+varying float vertex_flow;
+varying float local_height;
+
+float hash31(vec3 p) {
+	return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453);
+}
+
+float noise3d(vec3 p) {
+	vec3 cell = floor(p);
+	vec3 f = fract(p);
+	f = f * f * (3.0 - 2.0 * f);
+
+	float n000 = hash31(cell + vec3(0.0, 0.0, 0.0));
+	float n100 = hash31(cell + vec3(1.0, 0.0, 0.0));
+	float n010 = hash31(cell + vec3(0.0, 1.0, 0.0));
+	float n110 = hash31(cell + vec3(1.0, 1.0, 0.0));
+	float n001 = hash31(cell + vec3(0.0, 0.0, 1.0));
+	float n101 = hash31(cell + vec3(1.0, 0.0, 1.0));
+	float n011 = hash31(cell + vec3(0.0, 1.0, 1.0));
+	float n111 = hash31(cell + vec3(1.0, 1.0, 1.0));
+
+	float x00 = mix(n000, n100, f.x);
+	float x10 = mix(n010, n110, f.x);
+	float x01 = mix(n001, n101, f.x);
+	float x11 = mix(n011, n111, f.x);
+
+	return mix(mix(x00, x10, f.y), mix(x01, x11, f.y), f.z);
+}
+
+vec3 flow_position(vec3 position, float scale, float speed, vec3 offset) {
+	vec3 p = position * vec3(scale, scale * 0.58, scale);
+	p.y -= TIME * speed;
+	return p + offset;
+}
+
+void vertex() {
+	float height = clamp(VERTEX.y / 1.45 + 0.5, 0.0, 1.0);
+
+	/* Base silhouette */
+	float broad_base = mix(0.76, 1.0, smoothstep(0.02, 0.3, height));
+	float top_taper = 1.0 - smoothstep(0.34, 1.0, height) * taper_strength;
+	VERTEX.xz *= max(broad_base * top_taper, 0.08);
+
+	float flow_1 = noise3d(flow_position(VERTEX, noise_scale_1, flame_speed_1, vec3(0.0)));
+	float flow_2 = noise3d(flow_position(VERTEX, noise_scale_2, flame_speed_2, vec3(5.2, 11.7, -3.4)));
+
+	vertex_flow = flow_1 * 0.68 + flow_2 * 0.32;
+
+	float upper_influence = smoothstep(0.12, 0.88, height);
+	float displacement = (vertex_flow - 0.5) * displacement_strength * upper_influence;
+
+	VERTEX += NORMAL * displacement;
+	VERTEX.x += (flow_1 - flow_2) * displacement_strength * upper_influence * 0.55;
+	VERTEX.y += pow(height, 2.4) * top_stretch * (0.72 + flow_1 * 0.28);
+
+	/* NEW: drag the flame opposite movement */
+	vec3 move_dir = motion_dir_local;
+	move_dir.y = 0.0;
+
+	float move_len = length(move_dir);
+	if (move_len > 0.0001) {
+		move_dir = normalize(move_dir);
+
+		float height_from_base = max(VERTEX.y + 0.725, 0.0);
+		float bend_weight = pow(smoothstep(0.12, 1.0, height), drag_curve);
+		float drag_response = clamp(drag_strength / 0.4, 0.0, 1.0);
+		float bend_angle = radians(max_drag_angle_degrees) * motion_strength * bend_weight * drag_response;
+		float horizontal_bend = sin(bend_angle) * height_from_base;
+		float vertical_drop = (1.0 - cos(bend_angle)) * height_from_base;
+
+		/* Curve the upper flame backward while its base stays anchored. */
+		VERTEX -= move_dir * horizontal_bend;
+		VERTEX.y -= vertical_drop;
+
+		/* Add slight sideways lilt for more organic arc */
+		vec3 side_dir = normalize(vec3(-move_dir.z, 0.0, move_dir.x));
+		VERTEX += side_dir * (flow_1 - 0.5) * side_sway_from_motion * bend_weight * motion_strength;
+
+		/* Slight stretch upward while moving */
+		VERTEX.y += motion_stretch_y * bend_weight * motion_strength;
+	}
+
+	local_position = VERTEX;
+	local_height = height;
+}
+
+void fragment() {
+	float flow_1 = noise3d(
+		flow_position(
+			local_position,
+			noise_scale_1,
+			flame_speed_1,
+			vec3(0.0)
+		)
+	);
+
+	float flow_2 = noise3d(
+		flow_position(
+			local_position,
+			noise_scale_2,
+			flame_speed_2,
+			vec3(5.2, 11.7, -3.4)
+		)
+	);
+
+	float flame_noise = mix(flow_1, flow_2, 0.42);
+	flame_noise += flow_1 * flow_2 * 0.2;
+	flame_noise += (local_height - 0.5) * 0.06;
+
+	float tongues = smoothstep(
+		cutoff - softness,
+		cutoff + softness,
+		flame_noise
+	);
+
+	float bottom_fade = smoothstep(0.02, 0.26, local_height);
+	float tip_fade = 1.0 - smoothstep(0.82, 1.0, local_height);
+	float vertical_mask = bottom_fade * tip_fade;
+
+	float facing = abs(dot(normalize(NORMAL), normalize(VIEW)));
+	float soft_edge = smoothstep(0.02, 0.58, facing);
+
+	float edge_breakup = smoothstep(
+		0.2,
+		0.85,
+		flow_2 + flow_1 * 0.25
+	);
+
+	float flame_mask =
+		tongues *
+		vertical_mask *
+		soft_edge *
+		mix(0.65, 1.0, edge_breakup);
+
+	vec3 color = mix(
+		inner_color.rgb,
+		outer_color.rgb,
+		clamp(flow_2 * 0.5 + local_height * 0.32, 0.0, 1.0)
+	);
+
+	ALBEDO = color;
+
+	EMISSION =
+		color *
+		emission_strength *
+		(0.75 + flame_noise * 0.45);
+
+	ALPHA = opacity * pow(flame_mask, 1.25);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kf4sd"]
 render_priority = 1
-shader = ExtResource("3_pcd7t")
+shader = SubResource("Shader_pcd7t")
 shader_parameter/flame_speed_1 = 1.2
 shader_parameter/flame_speed_2 = 0.72
 shader_parameter/noise_scale_1 = 4.8
@@ -56,8 +413,8 @@ shader_parameter/softness = 0.1
 shader_parameter/displacement_strength = 0.085
 shader_parameter/taper_strength = 0.86
 shader_parameter/top_stretch = 0.34
-shader_parameter/inner_color = Color(1, 0.54901963, 0.8117647, 1)
-shader_parameter/outer_color = Color(1, 0.23921569, 0.5411765, 1)
+shader_parameter/inner_color = Color(0.3019608, 1, 0.8235294, 1)
+shader_parameter/outer_color = Color(0, 0.72156864, 0.5803922, 1)
 shader_parameter/emission_strength = 3.2
 shader_parameter/opacity = 0.3
 shader_parameter/motion_dir_local = Vector3(0, 0, 0)
@@ -109,7 +466,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pcd7t"]
 render_priority = 0
 shader = SubResource("Shader_e2a6j")
-shader_parameter/particle_color = Color(1, 0.54901963, 0.8117647, 0.8)
+shader_parameter/particle_color = Color(0.3019608, 1, 0.8235294, 0.8)
 shader_parameter/emission_strength = 4.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_kf4sd"]
@@ -157,7 +514,7 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3cnp1"]
 render_priority = 0
 shader = SubResource("Shader_bfmtj")
-shader_parameter/particle_color = Color(1, 0.54901963, 0.8117647, 0.8)
+shader_parameter/particle_color = Color(0.47843137, 1, 0.8784314, 1)
 shader_parameter/emission_strength = 2.6
 
 [sub_resource type="QuadMesh" id="QuadMesh_grdd7"]
@@ -182,12 +539,12 @@ mesh = SubResource("SphereMesh_3cnp1")
 [node name="InnerFlame" type="MeshInstance3D" parent="VisualRoot" unique_id=847400726]
 unique_name_in_owner = true
 transform = Transform3D(0.82, 0, 0, 0, 0.86, 0, 0, 0, 0.82, 0, 0, 0)
-material_override = SubResource("ShaderMaterial_grdd7")
+material_override = SubResource("ShaderMaterial_e2a6j")
 mesh = SubResource("SphereMesh_wchwv")
 
 [node name="FlameShell" type="MeshInstance3D" parent="VisualRoot" unique_id=134492594]
 unique_name_in_owner = true
-material_override = SubResource("ShaderMaterial_5a8jp")
+material_override = SubResource("ShaderMaterial_kf4sd")
 mesh = SubResource("SphereMesh_wchwv")
 
 [node name="EmberTrail" type="GPUParticles3D" parent="VisualRoot" unique_id=1917886582]
@@ -213,6 +570,6 @@ draw_pass_1 = SubResource("QuadMesh_grdd7")
 
 [node name="WispLight" type="OmniLight3D" parent="VisualRoot" unique_id=958773594]
 unique_name_in_owner = true
-light_color = Color(1, 0.6039216, 0.84705883, 1)
+light_color = Color(0.3019608, 1, 0.8235294, 1)
 light_energy = 1.45
 omni_range = 4.5
