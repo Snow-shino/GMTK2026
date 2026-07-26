@@ -45,7 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7107067, 9.938648, -11.665
 restore_amount = 10.0
 
 [node name="LifeCollectibleSmall2" parent="." unique_id=17611799 instance=ExtResource("3_0nxvk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.18329, 3.8468227, -59.63202)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.04141, 3.8468227, -54.1771)
 restore_amount = 10.0
 
 [node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("4_k25uy")]
@@ -134,4 +134,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60507584, 9.231802, -17.763542)
 
 [node name="DashCollectible2" parent="." unique_id=80288510 instance=ExtResource("12_tv30h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60507584, 9.121555, -35.843727)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.456045, 9.121555, -31.284355)
