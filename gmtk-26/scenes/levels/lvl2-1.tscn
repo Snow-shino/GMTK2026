@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="9_bhrca"]
 [ext_resource type="PackedScene" uid="uid://4byqqubxl02e" path="res://scenes/start_point.tscn" id="9_hxv46"]
 [ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="10_fdawt"]
+[ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="10_n8777"]
+[ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="11_hxv46"]
 
 [sub_resource type="Environment" id="Environment_forest"]
 background_mode = 1
@@ -40,7 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
 [node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("6_dn47d")]
 
 [node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("9_bhrca")]
-transform = Transform3D(-0.45956784, 0, -0.8881427, 0, 1, 0, 0.8881427, 0, -0.45956784, -4.692528, 73.250244, -107.94273)
+transform = Transform3D(-0.45956784, 0, -0.8881427, 0, 1, 0, 0.8881427, 0, -0.45956784, 15.223106, 105.361885, -88.99139)
 
 [node name="Tree" parent="." unique_id=1107119201 instance=ExtResource("10_fdawt")]
 transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -71.57733, -55.114784, 3.4605255)
@@ -93,25 +95,13 @@ transform = Transform3D(0.042693555, 0.65894866, -2.8905332, -0.04244186, 2.8906
 transform = Transform3D(-0.49784756, 2.7207668, -1.0680805, 1.1494539, 1.1784093, 2.466035, 2.6874008, 5.266897e-15, -1.2526357, -60.5647, 4.414795, -54.300045)
 
 [node name="Platform12" parent="." unique_id=2113990850 instance=ExtResource("6_q0354")]
-transform = Transform3D(-1.252636, 0, -2.687401, 0, 2.9649994, 0, 2.687401, 0, -1.252636, -42.634605, 2.4242249, -44.687904)
+transform = Transform3D(-1.252636, 0, -2.687401, 0, 2.9649994, 0, 2.687401, 0, -1.252636, -42.634605, 5.939909, -44.687904)
 
 [node name="Platform13" parent="." unique_id=1970212054 instance=ExtResource("6_q0354")]
 transform = Transform3D(1.7952483, 0, 2.3597252, 0, 2.9649997, 0, -2.3597252, 0, 1.7952483, -119.647484, 18.942287, -67.94159)
 
 [node name="Platform8" parent="." unique_id=1494704785 instance=ExtResource("6_q0354")]
-transform = Transform3D(2.4649074, 0, -1.6478617, 0, 2.9649992, 0, 1.6478617, 0, 2.4649074, -7.713255, 67.10205, -109.45369)
-
-[node name="Platform14" parent="." unique_id=1313929572 instance=ExtResource("6_q0354")]
-transform = Transform3D(2.9045424, 0, 0.5956921, -0.2891709, 2.5922146, 1.409972, -0.5207967, -1.4393198, 2.5393593, -82.21312, 67.21355, -122.489365)
-
-[node name="Platform15" parent="." unique_id=1083761071 instance=ExtResource("6_q0354")]
-transform = Transform3D(2.9460557, -0.25525084, 0.21638033, 0.3322054, 2.461116, -1.619805, -0.040161967, 1.6336997, 2.4739904, -41.295574, 72.3874, -146.99005)
-
-[node name="Platform9" parent="." unique_id=2059808492 instance=ExtResource("6_q0354")]
-transform = Transform3D(2.4649074, 0, -1.6478617, 0, 2.9649992, 0, 1.6478617, 0, 2.4649074, -3.935192, 17.647346, -117.8411)
-
-[node name="Platform10" parent="." unique_id=344126986 instance=ExtResource("6_q0354")]
-transform = Transform3D(2.4649074, 0, -1.6478617, 0, 2.9649992, 0, 1.6478617, 0, 2.4649074, 3.0326605, 15.455315, -112.66291)
+transform = Transform3D(2.9649951, 0, -0.004553795, 0, 2.964999, 0, 0.004553795, 0, 2.9649951, 14.423809, 98.689064, -87.81042)
 
 [node name="FallResetVolume" parent="." unique_id=252899995 instance=ExtResource("7_n8777")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.04953)
@@ -119,10 +109,86 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.0
 [node name="StartPoint" parent="." unique_id=647104682 instance=ExtResource("9_hxv46")]
 transform = Transform3D(-0.81604475, 0, 0.57798874, 0, 1, 0, -0.57798874, 0, -0.81604475, -0.14021921, 1.1192849, 7.654107)
 
-<<<<<<< HEAD
 [node name="Area3D" parent="." unique_id=1262300711 instance=ExtResource("5_6psxf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5928164, 2.1456423, 1.216795)
-=======
-[node name="FlightCollectible" parent="." unique_id=1262300711 instance=ExtResource("5_6psxf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0308456, 3.566559, 3.870403)
->>>>>>> d983892beccf3136a44addb435e3d414808f2319
+
+[node name="LifeCollectible" parent="." unique_id=17611799 instance=ExtResource("10_n8777")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.477165, 15.594409, -14.4962)
+
+[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("11_hxv46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42.345833, 13.471795, -43.943657)
+restore_amount = 35.0
+
+[node name="LifeCollectible2" parent="." unique_id=1595990132 instance=ExtResource("10_n8777")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60.28632, 17.401318, -54.98607)
+
+[node name="FlightCollectible2" parent="." unique_id=994617512 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 0.9998409, 0.017834991, 0, -0.017834991, 0.9998409, -90.89086, 20.336128, -59.16583)
+
+[node name="LifeCollectible3" parent="." unique_id=1277641820 instance=ExtResource("10_n8777")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118.18469, 25.775906, -61.103767)
+
+[node name="DashCollectible2" parent="." unique_id=703035925 instance=ExtResource("11_hxv46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -135.1285, 43.637314, -95.29296)
+
+[node name="LifeCollectible4" parent="." unique_id=1230700212 instance=ExtResource("10_n8777")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -133.14516, 51.006016, -107.601616)
+
+[node name="FlightCollectible3" parent="." unique_id=522814509 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -109.40316, 74.862656, -137.24052)
+restore_amount = 149.9
+
+[node name="LifeCollectible5" parent="." unique_id=950448053 instance=ExtResource("10_n8777")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -83.97983, 81.70127, -174.59697)
+
+[node name="LifeCollectible6" parent="." unique_id=2145107283 instance=ExtResource("10_n8777")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.30759, 82.82722, -199.51526)
+
+[node name="FlightCollectible4" parent="." unique_id=1944976740 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.12317, 85.40962, -186.70055)
+
+[node name="DashCollectible3" parent="." unique_id=76836646 instance=ExtResource("11_hxv46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.009291, 83.495575, -201.55832)
+
+[node name="FlightCollectible5" parent="." unique_id=1027052752 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4386, 82.77912, -176.83359)
+restore_amount = 150.0
+
+[node name="FlightCollectible6" parent="." unique_id=1264165216 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7177458, 100.68356, -159.9303)
+restore_amount = 150.0
+
+[node name="FlightCollectible7" parent="." unique_id=2142249974 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2163916, 102.01163, -137.89218)
+restore_amount = 100.0
+
+[node name="DashCollectible4" parent="." unique_id=429367289 instance=ExtResource("11_hxv46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1370516, 106.404236, -103.177055)
+
+[node name="DashCollectible5" parent="." unique_id=503566370 instance=ExtResource("11_hxv46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.9423, 15.692927, -62.2707)
+restore_amount = 80.0
+
+[node name="DashCollectible6" parent="." unique_id=2069570017 instance=ExtResource("11_hxv46")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.501444, 18.919815, -86.79452)
+
+[node name="FlightCollectible8" parent="." unique_id=815561929 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.081176, 15.095317, -122.11116)
+restore_amount = 80.0
+
+[node name="FlightCollectible9" parent="." unique_id=214624512 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0433788, 29.974323, -123.19375)
+restore_amount = 40.0
+
+[node name="FlightCollectible10" parent="." unique_id=1333153617 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8342109, 51.702225, -113.66887)
+restore_amount = 60.0
+
+[node name="FlightCollectible11" parent="." unique_id=1638329916 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6872339, 65.45355, -103.04949)
+restore_amount = 60.0
+
+[node name="FlightCollectible12" parent="." unique_id=1073725824 instance=ExtResource("5_6psxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55685544, 92.7171, -98.997505)
+restore_amount = 150.0
+
