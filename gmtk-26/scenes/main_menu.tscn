@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7wun1pbkqaya"]
+[gd_scene load_steps=6 format=3 uid="uid://c7wun1pbkqaya"]
 
 [ext_resource type="Script" uid="uid://bp7ibnxpekoj5" path="res://scripts/main_menu.gd" id="1_menu"]
 [ext_resource type="PackedScene" path="res://scenes/level_select_screen.tscn" id="2_select"]
+[ext_resource type="PackedScene" path="res://scenes/settings_panel.tscn" id="3_settings"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_panel"]
 bg_color = Color(0.015, 0.025, 0.055, 0.92)
@@ -128,6 +129,14 @@ theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBox_button")
 text = "LEVEL SELECT"
 
+[node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBox_button")
+text = "SETTINGS"
+
 [node name="Controls" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=53424371]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.38, 0.52, 0.62, 1)
@@ -143,4 +152,7 @@ unique_name_in_owner = true
 bus = &"UI"
 
 [node name="LevelSelectScreen" parent="." instance=ExtResource("2_select")]
+unique_name_in_owner = true
+
+[node name="SettingsPanel" parent="." instance=ExtResource("3_settings")]
 unique_name_in_owner = true

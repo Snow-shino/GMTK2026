@@ -40,6 +40,11 @@ func reset_life() -> void:
 	_set_life(starting_life)
 
 
+func fill_life() -> void:
+	_depleted_emitted = false
+	_set_life(max_life)
+
+
 func get_life_percent() -> float:
 	if max_life <= 0.0:
 		return 0.0

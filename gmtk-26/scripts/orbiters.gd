@@ -4,7 +4,7 @@ extends Node3D
 @export_enum("dash", "flight") var powerup_type := "dash"
 @export var orbit_radius := 1.6
 @export var orbit_height := 1.1
-@export var orbit_speed := 0.55 # radians per second; slow
+@export var orbit_speed := 8.55 # radians per second; slow
 @export var orbit_phase := 0.0 # lets Dash and Flight start apart
 
 var player: WispPlayer
