@@ -152,4 +152,16 @@ transform = Transform3D(-0.9240754, -0.05448979, -0.044209246, -0.049355548, 0.9
 [node name="Invisiblewall" parent="." unique_id=827719754 instance=ExtResource("11_t6q68")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.524637, 1.5685959, 27.52216)
 
+[node name="Invisiblewall2" parent="." unique_id=1270011904 instance=ExtResource("11_t6q68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.524637, 1.5685959, -131.65067)
+
+[node name="Invisiblewall3" parent="." unique_id=17378044 instance=ExtResource("11_t6q68")]
+transform = Transform3D(0.10263892, 0, 0.9947187, 0, 1, 0, -0.9947187, 0, 0.10263892, 83.84, 1.5685959, -59.595894)
+
+[node name="Invisiblewall4" parent="." unique_id=83493421 instance=ExtResource("11_t6q68")]
+transform = Transform3D(0.10263892, 0, 0.9947187, 0, 1, 0, -0.9947187, 0, 0.10263892, -23.43892, 1.5685959, -59.595894)
+
 [editable path="Invisiblewall"]
+[editable path="Invisiblewall2"]
+[editable path="Invisiblewall3"]
+[editable path="Invisiblewall4"]
