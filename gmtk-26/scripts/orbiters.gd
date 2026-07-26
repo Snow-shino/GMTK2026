@@ -17,7 +17,7 @@ func _ready() -> void:
 		push_error("PowerupFollower must be a child of Player.")
 		return
 
-	player.powerup_used.connect(_on_powerup_used)
+	
 
 func _process(delta: float) -> void:
 	if player == null:
