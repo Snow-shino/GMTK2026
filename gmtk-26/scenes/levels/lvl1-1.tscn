@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_5rcp6"]
 [ext_resource type="Texture2D" uid="uid://dykxc4wy814ev" path="res://Assets/props/grass_04_basecolor_1k.png" id="2_t6q68"]
 [ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="3_sd7dy"]
-[ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="4_lxl00"]
+[ext_resource type="PackedScene" path="res://scenes/life_collectible.tscn" id="4_lxl00"]
 [ext_resource type="PackedScene" uid="uid://cxesm1tn7lsle" path="res://scenes/flight_collectible.tscn" id="5_gtpn3"]
 [ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="6_00bta"]
 [ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="7_2xlwr"]
@@ -58,8 +58,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, 0, -27.40756)
 transform = Transform3D(15.255209, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -117.18973)
 mesh = SubResource("BoxMesh_ground")
 surface_material_override/0 = SubResource("StandardMaterial3D_ycdy4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D" unique_id=1326406296]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1711182998]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.739685, -0.25, -259.9886)
