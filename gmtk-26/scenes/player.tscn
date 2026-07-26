@@ -188,6 +188,7 @@ transform = Transform3D(1, 0, 0, 0, 0.96592593, 0.2588187, 0, -0.2588187, 0.9659
 shape = SubResource("SphereShape_arm")
 spring_length = 5.5
 margin = 0.15
+collision_mask = 0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=2078496529]
 unique_name_in_owner = true

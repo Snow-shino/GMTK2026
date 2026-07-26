@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/level_result_screen.gd" id="1_result"]
+[ext_resource type="PackedScene" path="res://scenes/settings_panel.tscn" id="2_settings"]
 
 [node name="LevelResultScreen" type="CanvasLayer"]
 unique_name_in_owner = true
@@ -53,6 +54,10 @@ text = "Restart Level"
 unique_name_in_owner = true
 text = "Next Level"
 
+[node name="SettingsButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+text = "Settings"
+
 [node name="MainMenuButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 text = "Main Menu"
@@ -60,3 +65,6 @@ text = "Main Menu"
 [node name="UIAudio" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 bus = &"UI"
+
+[node name="SettingsPanel" parent="." instance=ExtResource("2_settings")]
+unique_name_in_owner = true

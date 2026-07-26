@@ -3,6 +3,7 @@ extends LevelFlow
 const GOAL_SCENE := preload("res://scenes/level_goal.tscn")
 const RESULT_SCREEN_SCENE := preload("res://scenes/level_result_screen.tscn")
 const MUSIC_REGION_SCENE := preload("res://scenes/area_music_region.tscn")
+const PAUSE_MENU_SCENE := preload("res://scenes/pause_menu.tscn")
 
 @export_category("Test Level Flow")
 @export var goal_position := Vector3(-14.0, 8.0, -112.0)
@@ -24,6 +25,12 @@ func _enter_tree() -> void:
 		screen.name = "LevelResultScreen"
 		screen.unique_name_in_owner = true
 		add_child(screen)
+
+	if not has_node("PauseMenu"):
+		var pause_screen := PAUSE_MENU_SCENE.instantiate() as PauseMenu
+		pause_screen.name = "PauseMenu"
+		pause_screen.unique_name_in_owner = true
+		add_child(pause_screen)
 
 	for audio_name in ["BackgroundMusic", "AmbientLoop", "StateAudio"]:
 		if not has_node(audio_name):

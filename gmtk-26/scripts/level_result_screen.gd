@@ -1,6 +1,8 @@
 class_name LevelResultScreen
 extends CanvasLayer
 
+signal restart_requested
+
 @export var completion_screen_open_sound: AudioStream
 @export var failure_screen_open_sound: AudioStream
 @export var button_hover_sound: AudioStream
@@ -14,7 +16,9 @@ var _navigating := false
 @onready var life_label: Label = %LifeLabel
 @onready var restart_button: Button = %RestartButton
 @onready var next_button: Button = %NextButton
+@onready var settings_button: Button = %SettingsButton
 @onready var main_menu_button: Button = %MainMenuButton
+@onready var settings_panel: SettingsPanel = %SettingsPanel
 @onready var ui_audio: AudioStreamPlayer = %UIAudio
 
 
@@ -22,8 +26,9 @@ func _ready() -> void:
 	hide()
 	restart_button.pressed.connect(_restart_level)
 	next_button.pressed.connect(_load_next_level)
+	settings_button.pressed.connect(_open_settings)
 	main_menu_button.pressed.connect(_load_main_menu)
-	for button in [restart_button, next_button, main_menu_button]:
+	for button in [restart_button, next_button, settings_button, main_menu_button]:
 		button.mouse_entered.connect(_play_hover)
 
 
@@ -54,6 +59,7 @@ func show_failure(main_menu: PackedScene) -> void:
 
 func _show_screen(open_sound: AudioStream) -> void:
 	_navigating = false
+	settings_panel.hide()
 	show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	restart_button.grab_focus()
@@ -62,7 +68,17 @@ func _show_screen(open_sound: AudioStream) -> void:
 
 func _restart_level() -> void:
 	if _begin_navigation():
-		get_tree().reload_current_scene()
+		restart_requested.emit()
+
+
+func reset_screen() -> void:
+	_navigating = false
+	restart_button.disabled = false
+	next_button.disabled = false
+	settings_button.disabled = false
+	main_menu_button.disabled = _main_menu == null
+	settings_panel.hide()
+	hide()
 
 
 func _load_next_level() -> void:
@@ -71,6 +87,10 @@ func _load_next_level() -> void:
 
 func _load_main_menu() -> void:
 	_change_scene(_main_menu, "main menu")
+
+
+func _open_settings() -> void:
+	settings_panel.open()
 
 
 func _change_scene(scene: PackedScene, label: String) -> void:
@@ -90,6 +110,7 @@ func _begin_navigation() -> bool:
 	_navigating = true
 	restart_button.disabled = true
 	next_button.disabled = true
+	settings_button.disabled = true
 	main_menu_button.disabled = true
 	_play_sound(button_pressed_sound)
 	return true

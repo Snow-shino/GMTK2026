@@ -16,6 +16,7 @@ var state := LevelState.PLAYING
 @onready var goal: LevelGoal = get_node("LevelGoal")
 @onready var hud: CanvasLayer = get_node("LifeHUD")
 @onready var result_screen: LevelResultScreen = get_node("LevelResultScreen")
+@onready var pause_menu: PauseMenu = get_node("PauseMenu")
 @onready var music_player: AudioStreamPlayer = get_node("BackgroundMusic")
 @onready var ambience_player: AudioStreamPlayer = get_node("AmbientLoop")
 @onready var state_audio: AudioStreamPlayer = get_node("StateAudio")
@@ -30,6 +31,9 @@ func _ready() -> void:
 	hud.bind_player(player)
 	player.life_depleted.connect(_on_life_depleted)
 	goal.level_completed.connect(_on_level_completed)
+	result_screen.restart_requested.connect(restart_run)
+	pause_menu.restart_requested.connect(restart_run)
+	pause_menu.main_menu_requested.connect(_return_to_main_menu)
 	if level_sequence != null:
 		_start_loop(music_player, level_sequence.base_music, level_sequence.music_volume_db)
 		_start_loop(ambience_player, level_sequence.ambient_loop, level_sequence.ambience_volume_db)
@@ -37,7 +41,21 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if state == LevelState.PLAYING and event.is_action_pressed("restart"):
-		get_tree().call_deferred("reload_current_scene")
+		get_viewport().set_input_as_handled()
+		restart_run()
+
+
+func restart_run() -> void:
+	get_tree().call_deferred("reload_current_scene")
+
+
+func _return_to_main_menu() -> void:
+	if level_sequence == null or level_sequence.main_menu == null:
+		push_warning("Cannot return to main menu: no scene is assigned.")
+		return
+	var error := get_tree().change_scene_to_packed(level_sequence.main_menu)
+	if error != OK:
+		push_warning("Could not load main menu: %s" % error_string(error))
 
 
 func _on_level_completed(completed_goal: LevelGoal) -> void:
@@ -77,12 +95,30 @@ func _leave_playing(next_state: LevelState) -> bool:
 	player.set_control_enabled(false)
 	player.set_life_drain_enabled(false)
 	goal.set_goal_enabled(false)
+	_pause_level_music()
 	return true
+
+
+func _pause_level_music() -> void:
+	if is_instance_valid(music_player):
+		music_player.stream_paused = true
+	if is_instance_valid(ambience_player):
+		ambience_player.stream_paused = true
+
+
+func _resume_level_music() -> void:
+	if is_instance_valid(music_player) and music_player.playing:
+		music_player.stream_paused = false
+	if is_instance_valid(ambience_player) and ambience_player.playing:
+		ambience_player.stream_paused = false
 
 
 func _start_loop(player_node: AudioStreamPlayer, stream: AudioStream, volume_db: float) -> void:
 	player_node.volume_db = volume_db
 	if stream == null:
+		player_node.stop()
+		return
+	if player_node.playing and player_node.stream == stream:
 		return
 	player_node.stream = stream
 	if not player_node.finished.is_connected(player_node.play):

@@ -1,0 +1,101 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_pause"]
+[ext_resource type="PackedScene" path="res://scenes/settings_panel.tscn" id="2_settings"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_pause"]
+bg_color = Color(0.012, 0.025, 0.055, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.16, 0.65, 0.95, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+layer = 20
+script = ExtResource("1_pause")
+
+[node name="MenuPanel" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="MenuPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.72)
+
+[node name="Center" type="CenterContainer" parent="MenuPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="MenuPanel/Center"]
+custom_minimum_size = Vector2(420, 410)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBox_pause")
+
+[node name="Margin" type="MarginContainer" parent="MenuPanel/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 42
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 42
+theme_override_constants/margin_bottom = 34
+
+[node name="VBox" type="VBoxContainer" parent="MenuPanel/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="MenuPanel/Center/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="RestartHint" type="Label" parent="MenuPanel/Center/Panel/Margin/VBox"]
+layout_mode = 2
+text = "R — Restart from Start Point"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="MenuPanel/Center/Panel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="MenuPanel/Center/Panel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "RESTART"
+
+[node name="SettingsButton" type="Button" parent="MenuPanel/Center/Panel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="MainMenuButton" type="Button" parent="MenuPanel/Center/Panel/Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
+layout_mode = 2
+text = "MAIN MENU"
+
+[node name="SettingsPanel" parent="." instance=ExtResource("2_settings")]
+unique_name_in_owner = true
