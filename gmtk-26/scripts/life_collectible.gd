@@ -52,5 +52,5 @@ func _set_available(available: bool) -> void:
 	for child in get_children():
 		if child is CollisionShape3D:
 			child.set_deferred("disabled", not available)
-		elif child is VisualInstance3D:
+		elif child is Node3D:
 			child.visible = available
