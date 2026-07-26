@@ -74,7 +74,7 @@ var _respawn_transform: Transform3D
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	add_to_group("player")
-	floor_snap_length = 0.3
+	##floor_snap_length = 0.5
 	floor_stop_on_slope = true
 
 	# Keep camera-relative input independent from gameplay-facing rotation.
