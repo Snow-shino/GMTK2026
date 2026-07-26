@@ -6,12 +6,55 @@
 [ext_resource type="AudioStream" uid="uid://bi7e4vbbtuqsy" path="res://Assets/audio/flame put out.mp3" id="2_d4da1"]
 [ext_resource type="PackedScene" uid="uid://4r1m4aghmleh" path="res://scenes/levels/lvl1-2.tscn" id="2_lwcfh"]
 [ext_resource type="PackedScene" uid="uid://c7wun1pbkqaya" path="res://scenes/main_menu.tscn" id="2_menu"]
-[ext_resource type="PackedScene" uid="uid://bou4xwc5n5xph" path="res://scenes/levels/lvl1-3.tscn" id="3_to8eq"]
+[ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="5_lphgq"]
+[ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="6_vh2ib"]
+[ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="7_iclqc"]
 [ext_resource type="AudioStream" uid="uid://csilwjt34dor1" path="res://Assets/audio/win o wisp 1.1.mp3" id="8_6r7tt"]
+[ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="8_d6n01"]
+[ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="9_hyo7y"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="10_7im0i"]
+[ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="11_d5fus"]
+[ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="12_n3qh4"]
+[ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="13_1f3hc"]
+[ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="14_qh5k7"]
+[ext_resource type="PackedScene" uid="uid://6jfabtean8q0" path="res://scenes/levels/lvl1-4.tscn" id="15_qrjda"]
+[ext_resource type="PackedScene" uid="uid://bq70rvbgffvjm" path="res://scenes/levels/lvl1-5.tscn" id="16_m3ot7"]
+[ext_resource type="PackedScene" uid="uid://cskujjtkrpek1" path="res://scenes/levels/lvl1-6.tscn" id="17_2btbl"]
+[ext_resource type="PackedScene" uid="uid://b0rhkpawtqb0w" path="res://scenes/levels/lvl1-7.tscn" id="18_qi3bq"]
+[ext_resource type="PackedScene" uid="uid://crkpw0lhdm52q" path="res://scenes/levels/lvl2-1.tscn" id="19_fvp40"]
+
+[sub_resource type="Environment" id="Environment_forest"]
+background_mode = 1
+background_color = Color(0.008, 0.012, 0.025, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.08, 0.12, 0.2, 1)
+ambient_light_energy = 0.35
+fog_enabled = true
+fog_light_color = Color(0.025, 0.045, 0.08, 1)
+fog_light_energy = 0.3
+fog_density = 0.056
+
+[sub_resource type="BoxShape3D" id="BoxShape_ground"]
+size = Vector3(5087.3745, 0.5, 1063.8604)
+
+[sub_resource type="PackedScene" id="PackedScene_cjqmn"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("TestLevel", "script", "Node3D", "WorldEnvironment", "environment", "MoonLight", "transform", "light_color", "light_energy", "shadow_enabled", "DirectionalLight3D", "Ground", "StaticBody3D", "CollisionShape3D", "shape", "Player", "LifeCollectibleSmall", "restore_amount", "LifeCollectibleMedium", "LifeCollectibleLarge", "DashCollectible", "LifeHUD", "lantern", "tree", "LevelGoal", "Tree", "Tree2", "Tree3", "Tree4", "Tree5", "Tree6", "Tree7", "Tree8", "Tree9", "Tree10", "Tree11", "BranchPlatform", "BranchPlatform2", "CSGBox3D", "size", "CSGBox3D3", "CSGBox3D4", "use_collision", "CSGBox3D2"),
+"node_count": 37,
+"node_ids": PackedInt32Array(1751151151, 2022954363, 859006161, 1815939254, 1711182998, 1339558772, 384688360, 2068334197, 841365135, 1621690256, 198672142, 1897343743, 614217166, 787630280, 1107119201, 1550910758, 1498542618, 1617999930, 1549252688, 719033934, 1238491437, 37561425, 818268989, 1251515159, 2107655019, 1629209815, 580767650, 395962481, 842917873, 649632681, 901502237, 1577981104, 524878013, 1705571768, 1189385526, 1937403663, 944750866),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 2, 0, -1, 1, 1, 0, 0, 0, 0, 3, 3, -1, 1, 4, 1, 0, 0, 0, 10, 5, -1, 4, 6, 2, 7, 3, 8, 4, 9, 5, 0, 0, 0, 12, 11, -1, 1, 6, 6, 0, 3, 0, 13, 13, -1, 2, 6, 7, 14, 8, 0, 0, 0, 2147483647, 15, 9, 1, 6, 10, 0, 0, 0, 2147483647, 16, 11, 2, 6, 12, 17, 13, 0, 0, 0, 2147483647, 18, 11, 2, 6, 14, 17, 15, 0, 0, 0, 2147483647, 19, 11, 2, 6, 16, 17, 17, 0, 0, 0, 2147483647, 20, 18, 1, 6, 19, 0, 0, 0, 2147483647, 21, 20, 0, 0, 0, 0, 2147483647, 22, 21, 1, 6, 22, 0, 0, 0, 2147483647, 23, 23, 1, 6, 24, 0, 0, 0, 2147483647, 24, 25, 1, 6, 26, 0, 0, 0, 2147483647, 25, 27, 1, 6, 28, 0, 0, 0, 2147483647, 26, 27, 1, 6, 29, 0, 0, 0, 2147483647, 27, 27, 1, 6, 30, 0, 0, 0, 2147483647, 28, 27, 1, 6, 31, 0, 0, 0, 2147483647, 29, 27, 1, 6, 32, 0, 0, 0, 2147483647, 30, 27, 1, 6, 33, 0, 19, 0, 2147483647, 25, 27, 1, 6, 34, 0, 19, 0, 2147483647, 29, 27, 1, 6, 35, 0, 19, 0, 2147483647, 30, 27, 1, 6, 36, 0, 19, 0, 2147483647, 31, 27, 1, 6, 37, 0, 19, 0, 2147483647, 32, 27, 1, 6, 38, 0, 19, 0, 2147483647, 33, 27, 1, 6, 39, 0, 0, 0, 2147483647, 31, 27, 1, 6, 40, 0, 0, 0, 2147483647, 32, 27, 1, 6, 41, 0, 0, 0, 2147483647, 33, 27, 1, 6, 42, 0, 0, 0, 2147483647, 34, 27, 1, 6, 43, 0, 0, 0, 2147483647, 35, 27, 1, 6, 44, 0, 0, 0, 2147483647, 36, 45, 1, 6, 46, 0, 0, 0, 2147483647, 37, 45, 1, 6, 47, 0, 0, 0, 38, 38, -1, 2, 6, 48, 39, 49, 0, 0, 0, 38, 40, -1, 2, 6, 50, 39, 51, 0, 0, 0, 38, 41, -1, 3, 6, 52, 42, 5, 39, 51, 0, 0, 0, 38, 43, -1, 3, 6, 53, 42, 5, 39, 54, 0),
+"variants": [ExtResource("5_lphgq"), SubResource("Environment_forest"), Transform3D(0.8253356, 0.44229966, -0.3509874, 0, 0.62161, 0.7833269, 0.5646425, -0.6465076, 0.51303685, 0, 0, 0), Color(0.35, 0.48, 0.75, 1), 0.8, true, Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, 0, -27.40756), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.739685, -0.25, -259.9886), SubResource("BoxShape_ground"), ExtResource("6_vh2ib"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6), ExtResource("7_iclqc"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3510599, 8.738557, -10.120325), 10.0, Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0301876, 0.43749332, -33.00374), 25.0, Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.241108, 10.606803, -97.80378), 50.0, ExtResource("8_d6n01"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.307722, 26.462408, -55.312534), ExtResource("9_hyo7y"), ExtResource("10_7im0i"), Transform3D(1.6105909, 1.9805044, 0.33797148, 0.39377618, 0.11359278, -2.5421767, -1.9701682, 1.6417444, -0.23181507, -8.858223, 0, 8.359663), ExtResource("11_d5fus"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.6802692), ExtResource("12_n3qh4"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2431965, 4.712537, -56.976807), ExtResource("13_1f3hc"), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -71.57733, -55.114784, 3.4605255), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, 69.32435, -55.114784, -58.79595), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, 43.195293, -55.11808, 2.2380967), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, 109.20921, -55.114784, -203.94452), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -91.59522, -55.114784, -111.74538), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -53.267014, -55.114784, -249.61356), Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 21.981762, 0.019464493, 252.05789), Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 17.358162, 0.019465977, 150.7015), Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 55.68638, 0.019465977, 12.8333435), Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 22.756554, 0.019465977, 78.25134), Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, -23.395317, 0.019465977, 166.05322), Transform3D(1, 0, 0, 0, 0.90796757, 0, 0, 0, 1, 12.064812, 0.019493686, 227.43845), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -86.19684, -55.114784, -184.19556), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -132.34871, -55.114784, -96.39368), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -96.88858, -55.114697, -35.00846), Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, 69.619484, -55.114784, -106.644104), Transform3D(1.795, 0, 0, 0, 5.143178, 0, 0, 0, 1.795, -23.023722, -55.114784, -77.3703), ExtResource("14_qh5k7"), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.663378, 10.566439, -61.83157), Transform3D(-0.9240754, -0.05448979, -0.044209246, -0.049355548, 0.99662614, -0.017328024, 0.057147663, -0.020361802, -0.7298274, 63.92113, 13.988814, -61.641678), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 2.8601074, -5.550049, 6.9300203), Vector3(20.219238, 12.100098, 5.224121), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, -0.74212646, -7.9172387, -30.521288), Vector3(13.0147705, 12.100098, 5.224121), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 12.406657, -1.152431, -56.936043), Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 0.15753174, -19.390808, 27.112614), Vector3(184.81042, 149.4989, 7.4192505)],
+"version": 3
+}
 
 [resource]
 script = ExtResource("1_sequence")
-levels = Array[PackedScene]([ExtResource("1_7frm8"), ExtResource("2_lwcfh"), ExtResource("3_to8eq")])
+levels = Array[PackedScene]([ExtResource("1_7frm8"), ExtResource("2_lwcfh"), SubResource("PackedScene_cjqmn"), ExtResource("15_qrjda"), ExtResource("16_m3ot7"), ExtResource("17_2btbl"), ExtResource("18_qi3bq"), ExtResource("19_fvp40")])
 main_menu = ExtResource("2_menu")
 base_music = ExtResource("1_6r7tt")
 victory_sound = ExtResource("8_6r7tt")
