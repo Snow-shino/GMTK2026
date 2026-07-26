@@ -10,8 +10,10 @@ var _loading := false
 
 @onready var play_button: Button = %PlayButton
 @onready var level_select_button: Button = %LevelSelectButton
+@onready var settings_button: Button = %SettingsButton
 @onready var quit_button: Button = %QuitButton
 @onready var level_select_screen: Control = %LevelSelectScreen
+@onready var settings_panel: SettingsPanel = %SettingsPanel
 @onready var music_player: AudioStreamPlayer = %MenuMusic
 @onready var ui_audio: AudioStreamPlayer = %UIAudio
 
@@ -22,9 +24,11 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	play_button.pressed.connect(_play_game)
 	level_select_button.pressed.connect(_open_level_select)
+	settings_button.pressed.connect(_open_settings)
 	quit_button.pressed.connect(_quit_game)
 	play_button.mouse_entered.connect(_play_hover)
 	level_select_button.mouse_entered.connect(_play_hover)
+	settings_button.mouse_entered.connect(_play_hover)
 	quit_button.mouse_entered.connect(_play_hover)
 	var has_levels := level_sequence != null and not level_sequence.levels.is_empty()
 	play_button.disabled = not has_levels
@@ -62,6 +66,10 @@ func _open_level_select() -> void:
 	level_select_screen.open(level_sequence)
 
 
+func _open_settings() -> void:
+	settings_panel.open()
+
+
 func _quit_game() -> void:
 	if _loading:
 		return
@@ -78,6 +86,7 @@ func _play_hover() -> void:
 func _disable_buttons() -> void:
 	play_button.disabled = true
 	level_select_button.disabled = true
+	settings_button.disabled = true
 	quit_button.disabled = true
 
 

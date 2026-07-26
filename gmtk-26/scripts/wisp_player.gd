@@ -291,6 +291,10 @@ func reset_life() -> void:
 	life.reset_life()
 
 
+func fill_life() -> void:
+	life.fill_life()
+
+
 func get_life_percent() -> float:
 	return life.get_life_percent()
 
