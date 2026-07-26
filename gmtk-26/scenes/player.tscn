@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://dqpa3faxj80bb" path="res://scripts/wisp_visual_animation.gd" id="3_visual"]
 [ext_resource type="Shader" uid="uid://b4e7wvkqir6or" path="res://shaders/wisp_flame.gdshader" id="4_flame"]
 [ext_resource type="Shader" uid="uid://cvcy6tr0ric6b" path="res://shaders/wisp_particle.gdshader" id="5_particle"]
+[ext_resource type="PackedScene" uid="uid://bm2b3mehjx1p7" path="res://scenes/dash_follower.tscn" id="6_fjrip"]
+[ext_resource type="PackedScene" uid="uid://b5ndpkvyccy1q" path="res://scenes/flight_follower.tscn" id="7_smehm"]
+[ext_resource type="Script" uid="uid://ci2pt7g07b25y" path="res://scripts/orbiters.gd" id="7_ur7pv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape_player"]
 radius = 0.45
@@ -202,3 +205,13 @@ bus = &"SFX"
 [node name="WarningAudio" type="AudioStreamPlayer" parent="." unique_id=918297472]
 unique_name_in_owner = true
 bus = &"SFX"
+
+[node name="DashFollower" parent="." unique_id=616795084 instance=ExtResource("6_fjrip")]
+script = ExtResource("7_ur7pv")
+orbit_radius = 1.4
+
+[node name="FlightFollower" parent="." unique_id=258326473 instance=ExtResource("7_smehm")]
+script = ExtResource("7_ur7pv")
+powerup_type = "flight"
+orbit_radius = 1.8
+orbit_phase = 3.14

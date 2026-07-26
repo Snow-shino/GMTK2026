@@ -170,11 +170,6 @@ script = ExtResource("1_dash")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1231726164]
 shape = SubResource("SphereShape3D_u6idi")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1695113081]
-light_color = Color(1, 0.6039216, 0.84705883, 1)
-light_energy = 1.5
-omni_range = 3.0
-
 [node name="VisualRoot" type="Node3D" parent="." unique_id=2139575641]
 unique_name_in_owner = true
 script = ExtResource("3_e2a6j")

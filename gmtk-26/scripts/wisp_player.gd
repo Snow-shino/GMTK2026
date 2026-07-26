@@ -4,6 +4,7 @@ extends CharacterBody3D
 signal life_changed(current_life: float, max_life: float)
 signal life_depleted
 signal respawned
+signal powerup_used(powerup: String)
 
 @export_category("Ground Movement")
 @export_range(0.1, 30.0, 0.1) var max_ground_speed: float = 16.0
@@ -334,6 +335,7 @@ func dash() -> void:
 
 	has_dash_powerup = false
 	is_dashing = true
+	powerup_used.emit("dash")
 	_dash_time_left = dash_duration
 	var dash_direction: Vector3 = -global_basis.z
 	var current_horizontal := Vector3(velocity.x, 0.0, velocity.z)
@@ -356,6 +358,7 @@ func _handle_flight(delta: float) -> void:
 		flight_decay = 4.0
 		is_flying = false
 		has_flight_powerup = false
+		powerup_used.emit("flight")
 		return
 
 	if Input.is_action_pressed("jump"):
