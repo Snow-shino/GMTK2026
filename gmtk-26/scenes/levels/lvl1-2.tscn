@@ -37,15 +37,13 @@ light_energy = 0.8
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_hxv46")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34600168, 5.9790106)
 
 [node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("3_pu7c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3510599, 8.738557, -10.120325)
-restore_amount = 10.0
 
 [node name="LifeCollectibleMedium" parent="." unique_id=2068334197 instance=ExtResource("3_pu7c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1673336, 0.1223135, -27.351019)
-restore_amount = 25.0
 
 [node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("6_dn47d")]
 

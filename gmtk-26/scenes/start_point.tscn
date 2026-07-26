@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://4byqqubxl02e"]
+
+[ext_resource type="Script" uid="uid://dcd40f8cnnm0w" path="res://scripts/start_point.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="2_bi1dq"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape_start"]
+height = 4.0
+radius = 5.0
+
+[node name="StartPoint" type="Area3D" unique_id=647104682]
+collision_layer = 0
+monitorable = false
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=834678208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape_start")
+
+[node name="RespawnMarker" type="Marker3D" parent="." unique_id=2116667936]
+unique_name_in_owner = true
+
+[node name="lantern" parent="." unique_id=1697507264 instance=ExtResource("2_bi1dq")]
+transform = Transform3D(0.33555532, -0.93963975, 0.06693057, -2.746865e-09, -0.07105002, -0.99747276, 0.9420204, 0.33470732, -0.023841208, -0.013037324, 0.7429409, -3.172164)
+
+[node name="AreaLight3D" type="AreaLight3D" parent="." unique_id=1184045013]
+transform = Transform3D(1, 0, 0, 0, 0.0042551192, 0.99999094, 0, -0.99999094, 0.0042551192, 0, 4.8480606, 0)
+light_color = Color(0.8861806, 0.5437217, 5.7756904e-07, 1)
+light_energy = 3.995
