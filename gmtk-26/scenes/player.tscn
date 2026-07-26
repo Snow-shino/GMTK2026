@@ -12,7 +12,7 @@ height = 1.8
 
 [sub_resource type="StandardMaterial3D" id="Material_wisp"]
 shading_mode = 0
-albedo_color = Color(0.82, 0.96, 1, 1)
+albedo_color = Color(0.81960785, 0.9607843, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_wisp"]
 material = SubResource("Material_wisp")
@@ -31,8 +31,8 @@ shader_parameter/softness = 0.13
 shader_parameter/displacement_strength = 0.035
 shader_parameter/taper_strength = 0.76
 shader_parameter/top_stretch = 0.22
-shader_parameter/inner_color = Color(0.9, 0.985, 1, 1)
-shader_parameter/outer_color = Color(0.16, 0.76, 1, 1)
+shader_parameter/inner_color = Color(0.16078432, 0.7607843, 1, 1)
+shader_parameter/outer_color = Color(0.023529412, 0.2784314, 1, 1)
 shader_parameter/emission_strength = 4.2
 shader_parameter/opacity = 0.46
 shader_parameter/motion_dir_local = Vector3(0, 0, 0)
@@ -59,8 +59,8 @@ shader_parameter/softness = 0.1
 shader_parameter/displacement_strength = 0.085
 shader_parameter/taper_strength = 0.86
 shader_parameter/top_stretch = 0.34
-shader_parameter/inner_color = Color(0.34, 0.86, 1, 1)
-shader_parameter/outer_color = Color(0.025, 0.28, 1, 1)
+shader_parameter/inner_color = Color(0.82, 0.97, 1, 1)
+shader_parameter/outer_color = Color(0.04, 0.42, 1, 1)
 shader_parameter/emission_strength = 3.2
 shader_parameter/opacity = 0.3
 shader_parameter/motion_dir_local = Vector3(0, 0, 0)
@@ -173,7 +173,7 @@ draw_pass_1 = SubResource("QuadMesh_ambient")
 
 [node name="WispLight" type="OmniLight3D" parent="VisualRoot" unique_id=16021801]
 unique_name_in_owner = true
-light_color = Color(0.25, 0.75, 1, 1)
+light_color = Color(0.2509804, 0.7490196, 1, 1)
 light_energy = 1.45
 omni_range = 4.5
 
@@ -196,10 +196,10 @@ unique_name_in_owner = true
 script = ExtResource("2_life")
 drain_rate = 30.0
 
-[node name="EffectsAudio" type="AudioStreamPlayer3D" parent="." unique_id=1825294988]
+[node name="EffectsAudio" type="AudioStreamPlayer3D" parent="." unique_id=1774101060]
 unique_name_in_owner = true
 bus = &"SFX"
 
-[node name="WarningAudio" type="AudioStreamPlayer" parent="." unique_id=1143372736]
+[node name="WarningAudio" type="AudioStreamPlayer" parent="." unique_id=918297472]
 unique_name_in_owner = true
 bus = &"SFX"
