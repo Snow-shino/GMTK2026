@@ -119,10 +119,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.0
 [node name="StartPoint" parent="." unique_id=647104682 instance=ExtResource("9_hxv46")]
 transform = Transform3D(-0.81604475, 0, 0.57798874, 0, 1, 0, -0.57798874, 0, -0.81604475, -0.14021921, 1.1192849, 7.654107)
 
-<<<<<<< HEAD
-[node name="Area3D" parent="." unique_id=1262300711 instance=ExtResource("5_6psxf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5928164, 2.1456423, 1.216795)
-=======
 [node name="FlightCollectible" parent="." unique_id=1262300711 instance=ExtResource("5_6psxf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0308456, 3.566559, 3.870403)
->>>>>>> d983892beccf3136a44addb435e3d414808f2319

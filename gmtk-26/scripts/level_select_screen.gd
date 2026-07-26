@@ -4,7 +4,7 @@ extends Control
 @export var button_hover_sound: AudioStream
 @export var button_pressed_sound: AudioStream
 
-var _sequence: LevelSequence
+var _sequence: Resource
 var _loading := false
 
 @onready var level_list: VBoxContainer = %LevelList
@@ -18,7 +18,7 @@ func _ready() -> void:
 	back_button.mouse_entered.connect(_play_hover)
 
 
-func open(sequence: LevelSequence) -> void:
+func open(sequence: Resource) -> void:
 	_sequence = sequence
 	_loading = false
 	_rebuild_level_list()
@@ -37,7 +37,7 @@ func _rebuild_level_list() -> void:
 		level_list.add_child(empty_label)
 		return
 	for index in _sequence.levels.size():
-		var level := _sequence.levels[index]
+		var level: PackedScene = _sequence.levels[index]
 		var button := Button.new()
 		button.custom_minimum_size.y = 46.0
 		button.text = _get_level_label(level, index)

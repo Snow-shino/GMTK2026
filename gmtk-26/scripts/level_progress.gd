@@ -25,12 +25,12 @@ static func has_visited(scene_path: String) -> bool:
 	return config.get_value(SECTION, scene_path, false) as bool
 
 
-static func is_unlocked(sequence: LevelSequence, level_index: int) -> bool:
+static func is_unlocked(sequence: Resource, level_index: int) -> bool:
 	if sequence == null or level_index < 0 or level_index >= sequence.levels.size():
 		return false
 	if level_index == 0:
 		return true
-	var level := sequence.levels[level_index]
+	var level: PackedScene = sequence.levels[level_index]
 	return level != null and has_visited(level.resource_path)
 
 
