@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c7wun1pbkqaya" path="res://scenes/main_menu.tscn" id="2_menu"]
 [ext_resource type="PackedScene" uid="uid://bou4xwc5n5xph" path="res://scenes/levels/lvl1-3.tscn" id="3_to8eq"]
 [ext_resource type="AudioStream" uid="uid://csilwjt34dor1" path="res://Assets/audio/win o wisp 1.1.mp3" id="8_6r7tt"]
+[ext_resource type="PackedScene" uid="uid://cw703lnlr1kqm" path="res://scenes/levels/lvl2-2.tscn" id="11_nmvnp"]
 [ext_resource type="PackedScene" uid="uid://6jfabtean8q0" path="res://scenes/levels/lvl1-4.tscn" id="15_qrjda"]
 [ext_resource type="PackedScene" uid="uid://bq70rvbgffvjm" path="res://scenes/levels/lvl1-5.tscn" id="16_m3ot7"]
 [ext_resource type="PackedScene" uid="uid://cskujjtkrpek1" path="res://scenes/levels/lvl1-6.tscn" id="17_2btbl"]
@@ -16,7 +17,7 @@
 
 [resource]
 script = ExtResource("1_sequence")
-levels = Array[PackedScene]([ExtResource("1_7frm8"), ExtResource("2_lwcfh"), ExtResource("3_to8eq"), ExtResource("15_qrjda"), ExtResource("16_m3ot7"), ExtResource("17_2btbl"), ExtResource("18_qi3bq"), ExtResource("19_fvp40")])
+levels = Array[PackedScene]([ExtResource("1_7frm8"), ExtResource("2_lwcfh"), ExtResource("3_to8eq"), ExtResource("15_qrjda"), ExtResource("16_m3ot7"), ExtResource("17_2btbl"), ExtResource("18_qi3bq"), ExtResource("19_fvp40"), ExtResource("11_nmvnp")])
 main_menu = ExtResource("2_menu")
 base_music = ExtResource("1_6r7tt")
 victory_sound = ExtResource("8_6r7tt")
