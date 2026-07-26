@@ -164,7 +164,6 @@ material = SubResource("ShaderMaterial_lyc4d")
 orientation = 1
 
 [node name="Area3D" type="Area3D" unique_id=1262300711]
-script = ExtResource("1_ohfg5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1005863412]
 shape = SubResource("SphereShape3D_56dul")
