@@ -5,11 +5,13 @@
 [ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="3_ct5y8"]
 [ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="4_54l8x"]
 [ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="5_avv16"]
-[ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="6_re85h"]
 [ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="7_hjlaf"]
 [ext_resource type="PackedScene" uid="uid://br4xs4vadfjdy" path="res://scenes/level_goal.tscn" id="8_0sncn"]
 [ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="9_2nrxc"]
+[ext_resource type="PackedScene" uid="uid://bhgumkoverpdh" path="res://Assets/props/platform.tscn" id="10_fck74"]
 [ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="10_haxpt"]
+[ext_resource type="PackedScene" uid="uid://dh32ro43uocf0" path="res://scenes/fall_reset_volume.tscn" id="11_ct5y8"]
+[ext_resource type="PackedScene" uid="uid://4byqqubxl02e" path="res://scenes/start_point.tscn" id="12_ct5y8"]
 
 [sub_resource type="Environment" id="Environment_forest"]
 background_mode = 1
@@ -22,11 +24,9 @@ fog_light_color = Color(0.025, 0.045, 0.08, 1)
 fog_light_energy = 0.3
 fog_density = 0.056
 
-[sub_resource type="BoxShape3D" id="BoxShape_ground"]
-size = Vector3(5087.3745, 0.5, 1063.8604)
-
-[node name="TestLevel" type="Node3D" unique_id=1751151151]
+[node name="TestLevel2" type="Node3D" unique_id=1751151151]
 script = ExtResource("1_kh0de")
+completion_delay = 0.3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
 environment = SubResource("Environment_forest")
@@ -37,41 +37,19 @@ light_color = Color(0.35, 0.48, 0.75, 1)
 light_energy = 0.8
 shadow_enabled = true
 
-[node name="Ground" type="StaticBody3D" parent="." unique_id=1815939254]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.7089322, 0, 0, -27.40756)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=1711182998]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.739685, -0.25, -259.9886)
-shape = SubResource("BoxShape_ground")
-
 [node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_fck74")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
 
 [node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("3_ct5y8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3510599, 8.738557, -10.120325)
-restore_amount = 10.0
-
-[node name="LifeCollectibleMedium" parent="." unique_id=2068334197 instance=ExtResource("3_ct5y8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0301876, 0.43749332, -33.00374)
-restore_amount = 25.0
-
-[node name="LifeCollectibleLarge" parent="." unique_id=841365135 instance=ExtResource("3_ct5y8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.241108, 10.606803, -97.80378)
-restore_amount = 50.0
-
-[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("4_54l8x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.307722, 26.462408, -55.312534)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35105896, 8.821732, -11.6654005)
 
 [node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("5_avv16")]
-
-[node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("6_re85h")]
-transform = Transform3D(1.6105909, 1.9805044, 0.33797148, 0.39377618, 0.11359278, -2.5421767, -1.9701682, 1.6417444, -0.23181507, -8.858223, 0, 8.359663)
 
 [node name="tree" parent="." unique_id=614217166 instance=ExtResource("7_hjlaf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.6802692)
 
 [node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("8_0sncn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2431965, 4.712537, -56.976807)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.120077, 1.9957347, -63.58131)
 
 [node name="Tree" parent="." unique_id=1107119201 instance=ExtResource("9_2nrxc")]
 transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -71.57733, -55.114784, 3.4605255)
@@ -130,20 +108,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.663378, 10.566439, -61.83
 [node name="BranchPlatform2" parent="." unique_id=524878013 instance=ExtResource("10_haxpt")]
 transform = Transform3D(-0.9240754, -0.05448979, -0.044209246, -0.049355548, 0.99662614, -0.017328024, 0.057147663, -0.020361802, -0.7298274, 63.92113, 13.988814, -61.641678)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1705571768]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 2.8601074, -5.550049, 6.9300203)
-size = Vector3(20.219238, 12.100098, 5.224121)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=1189385526]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, -0.74212646, -7.9172387, -30.521288)
-size = Vector3(13.0147705, 12.100098, 5.224121)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=1937403663]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 12.406657, -1.152431, -56.936043)
-use_collision = true
-size = Vector3(13.0147705, 12.100098, 5.224121)
-
 [node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=944750866]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 3.2811656, 0.15753174, -19.390808, 27.112614)
 use_collision = true
 size = Vector3(184.81042, 149.4989, 7.4192505)
+
+[node name="Platform" parent="." unique_id=1406972493 instance=ExtResource("10_fck74")]
+transform = Transform3D(2.01, 0, 0, 0, 2.01, 0, 0, 0, 2.01, -0.16567421, -3.6296525, 6.790696)
+
+[node name="Platform3" parent="." unique_id=2078203844 instance=ExtResource("10_fck74")]
+transform = Transform3D(0.78036547, 0, 2.8604636, 0, 2.9649997, 0, -2.8604636, 0, 0.78036547, 13.074259, -3.7487035, -61.99378)
+
+[node name="Platform4" parent="." unique_id=1432464222 instance=ExtResource("10_fck74")]
+transform = Transform3D(0.78036547, 0, 2.8604636, 0, 2.9649997, 0, -2.8604636, 0, 0.78036547, -6.0674114, -5.89642, -17.285925)
+
+[node name="FallResetVolume" parent="." unique_id=252899995 instance=ExtResource("11_ct5y8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.04953)
+
+[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("4_54l8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.60507584, 7.6762333, -32.552166)
+
+[node name="StartPoint" parent="." unique_id=647104682 instance=ExtResource("12_ct5y8")]
+transform = Transform3D(-0.27840692, 0, 0.9604632, 0, 1, 0, -0.9604632, 0, -0.27840692, -0.2852521, 0.516067, 9.098267)

@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cdbtwsvvw87yd" path="res://scripts/test_level.gd" id="1_n8777"]
 [ext_resource type="PackedScene" uid="uid://cmwl5h4dv8abx" path="res://scenes/player.tscn" id="2_hxv46"]
 [ext_resource type="PackedScene" uid="uid://caqkn1lqiox8l" path="res://scenes/life_collectible.tscn" id="3_pu7c1"]
-[ext_resource type="PackedScene" uid="uid://bhb6wmbfr3n3o" path="res://scenes/dash_collectible.tscn" id="4_lsuvu"]
 [ext_resource type="PackedScene" uid="uid://uvp1lno5ww1a" path="res://scenes/life_hud.tscn" id="6_dn47d"]
 [ext_resource type="PackedScene" uid="uid://cc10apmgnf3m0" path="res://Assets/props/lantern.fbx" id="7_ed01a"]
 [ext_resource type="PackedScene" uid="uid://b5t6ef3vklax7" path="res://Assets/props/tree.fbx" id="8_nm2xg"]
@@ -11,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ceiav7efrxarc" path="res://Assets/props/tree.tscn" id="10_fdawt"]
 [ext_resource type="PackedScene" uid="uid://dhqal6i5ljm4t" path="res://Assets/props/branch platform.tscn" id="11_2xw2u"]
 [ext_resource type="PackedScene" uid="uid://bhgumkoverpdh" path="res://Assets/props/platform.tscn" id="11_ss7y8"]
+[ext_resource type="PackedScene" uid="uid://dh32ro43uocf0" path="res://scenes/fall_reset_volume.tscn" id="12_wyjol"]
 
 [sub_resource type="Environment" id="Environment_forest"]
 background_mode = 1
@@ -25,6 +25,7 @@ fog_density = 0.056
 
 [node name="TestLevel2" type="Node3D" unique_id=1751151151]
 script = ExtResource("1_n8777")
+completion_delay = 0.3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2022954363]
 environment = SubResource("Environment_forest")
@@ -36,33 +37,24 @@ light_energy = 0.8
 shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1339558772 instance=ExtResource("2_hxv46")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34600168, 5.9790106)
 
 [node name="LifeCollectibleSmall" parent="." unique_id=384688360 instance=ExtResource("3_pu7c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3510599, 8.738557, -10.120325)
-restore_amount = 10.0
 
 [node name="LifeCollectibleMedium" parent="." unique_id=2068334197 instance=ExtResource("3_pu7c1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1673336, 0.1223135, -27.351019)
-restore_amount = 25.0
-
-[node name="LifeCollectibleLarge" parent="." unique_id=841365135 instance=ExtResource("3_pu7c1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.241108, 10.606803, -97.80378)
-restore_amount = 50.0
-
-[node name="DashCollectible" parent="." unique_id=1621690256 instance=ExtResource("4_lsuvu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.307722, 26.462408, -55.312534)
 
 [node name="LifeHUD" parent="." unique_id=198672142 instance=ExtResource("6_dn47d")]
 
 [node name="lantern" parent="." unique_id=1897343743 instance=ExtResource("7_ed01a")]
-transform = Transform3D(1.6105909, 1.9805044, 0.33797148, 0.39377618, 0.11359278, -2.5421767, -1.9701682, 1.6417444, -0.23181507, -8.858223, 0, 8.359663)
+transform = Transform3D(1.6105909, 1.9805044, 0.33797148, 0.39377618, 0.11359278, -2.5421767, -1.9701682, 1.6417444, -0.23181507, -4.7268867, 0.86172867, 10.412244)
 
 [node name="tree" parent="." unique_id=614217166 instance=ExtResource("8_nm2xg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.635953, 0.99999976, -2.6802692)
 
 [node name="LevelGoal" parent="." unique_id=787630280 instance=ExtResource("9_bhrca")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2431965, 4.712537, -56.976807)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.874176, 1.9957347, -58.002254)
 
 [node name="Tree" parent="." unique_id=1107119201 instance=ExtResource("10_fdawt")]
 transform = Transform3D(1, 0, 0, 0, 2.8652804, 0, 0, 0, 1, -71.57733, -55.114784, 3.4605255)
@@ -134,3 +126,6 @@ transform = Transform3D(1.8375083, 0, -0.8146552, 0, 2.01, 0, 0.8146552, 0, 1.83
 
 [node name="Platform3" parent="." unique_id=2078203844 instance=ExtResource("11_ss7y8")]
 transform = Transform3D(0.78036547, 0, 2.8604636, 0, 2.9649997, 0, -2.8604636, 0, 0.78036547, 10.828357, -3.7487035, -56.41472)
+
+[node name="FallResetVolume" parent="." unique_id=252899995 instance=ExtResource("12_wyjol")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.867004, -48.430527, -64.04953)
